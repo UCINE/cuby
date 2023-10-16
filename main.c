@@ -117,7 +117,9 @@ int process_map(char *filename)
 
 void draw_square(t_gameworld *world, int x_start, int y_start, int size, int color)
 {
-    int x, y;
+    int x;
+	int y;
+
     for (y = y_start; y < y_start + size; y++)
     {
         for (x = x_start; x < x_start + size; x++)
@@ -129,7 +131,9 @@ void draw_square(t_gameworld *world, int x_start, int y_start, int size, int col
 
 void draw_map(t_gameworld *world)
 {
-    int x, y;
+    int x;
+	int y;
+	
     for (y = 0; y < 8; y++)
     {
         for (x = 0; x < 18; x++)
@@ -138,7 +142,7 @@ void draw_map(t_gameworld *world)
             {
                 draw_square(world, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0xFFFFFF);
             }
-            else if (world->map[y][x] == '0') // if it's an empty space
+            else if (world->map[y][x] == '0')
             {
                 draw_square(world, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x000000);
             }
@@ -150,26 +154,27 @@ int main(int ac, char **av)
 {
 	t_gameworld world; 
 
-	if (ac != 2)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
-		return (1);
-	}
+	// if (ac != 2)
+	// {
+	// 	ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
+	// 	return (1);
+	// }
+	(void)ac;
 	(void)av;
 	//process_map(av[1])
 	
-	char *static_map[] = {
-		"111111111111111111",
-		"100000000000000001",
-		"100000000000000001",
-		"100001000000N00001",
-		"100010000000000001",
-		"100000000011100001",
-		"100000000000000001",
-		"111111111111111111",
-		NULL
-	};
-	world.map = static_map;
+	// char *static_map[] = {
+	// 	"111111111111111111",
+	// 	"100000000000000001",
+	// 	"100000000000000001",
+	// 	"100001000000N00001",
+	// 	"100010000000000001",
+	// 	"100000000011100001",
+	// 	"100000000000000001",
+	// 	"111111111111111111",
+	// 	NULL
+	// };
+	// world.map = static_map;
 	world.mlx = mlx_init();
 	if (!world.mlx)
 	{
@@ -186,7 +191,7 @@ int main(int ac, char **av)
 	}
 
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	draw_map(&world);
+	//draw_map(&world);
 	if (!world.mlximage)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);
