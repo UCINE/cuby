@@ -11,7 +11,7 @@ OBJ         = $(SRCS:.c=.o)
 
 CFLAGS      = -Wall -Wextra -Werror -g3 -fsanitize=address
 
-IMAC_FLAGS	= -L libft -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
+IMAC_FLAGS	= -L libft #-lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 
 LINUX_FLAGS = -L libft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 

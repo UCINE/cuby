@@ -15,6 +15,7 @@
 
 # define SCREEN_WIDTH 900
 # define SCREEN_HEIGHT 800
+# define TILE_SIZE 64
 
 typedef struct s_map
 {
@@ -54,6 +55,7 @@ typedef struct s_character
 
 typedef struct s_gameworld
 {
+	char			**map;
     t_character		player;
 	void			*mlx;
 	void			*window;
