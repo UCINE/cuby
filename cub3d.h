@@ -13,8 +13,8 @@
 // # define S 1
 // # define D 2
 
-# define SCREEN_WIDTH 900
-# define SCREEN_HEIGHT 800
+# define SCREEN_WIDTH 1152
+# define SCREEN_HEIGHT 512
 # define TILE_SIZE 64
 
 typedef struct s_map

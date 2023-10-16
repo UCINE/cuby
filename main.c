@@ -163,18 +163,18 @@ int main(int ac, char **av)
 	(void)av;
 	//process_map(av[1])
 	
-	// char *static_map[] = {
-	// 	"111111111111111111",
-	// 	"100000000000000001",
-	// 	"100000000000000001",
-	// 	"100001000000N00001",
-	// 	"100010000000000001",
-	// 	"100000000011100001",
-	// 	"100000000000000001",
-	// 	"111111111111111111",
-	// 	NULL
-	// };
-	// world.map = static_map;
+	char *static_map[] = {
+		"111111111111111111",
+		"100000000000000001",
+		"100000000000000001",
+		"100001000000N00001",
+		"100010000000000001",
+		"100000000011100001",
+		"100000000000000001",
+		"111111111111111111",
+		NULL
+	};
+	world.map = static_map;
 	world.mlx = mlx_init();
 	if (!world.mlx)
 	{
@@ -191,7 +191,7 @@ int main(int ac, char **av)
 	}
 
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	//draw_map(&world);
+	draw_map(&world);
 	if (!world.mlximage)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);
@@ -200,7 +200,7 @@ int main(int ac, char **av)
 		return (1);
 	}
 
-	mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
+	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
 	mlx_loop(world.mlx);
 	return (0);
 }
