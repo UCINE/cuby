@@ -155,7 +155,6 @@ int main(int ac, char **av)
 	}
 	// (void)ac;
 	// (void)av;
-	world.map_info = NULL;
 	if (ac == 2)
 		world.map_info = process_map(av[1]);
 	if (!world.map_info)
