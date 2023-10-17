@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 04:29:26 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/17 09:53:21 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ int main(int ac, char **av)
 	if (!world.mlximage)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);
-		mlx_destroy_window(world.mlx, world.window);
 		free(world.mlx);
 		return (1);
 	}
