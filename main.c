@@ -87,35 +87,29 @@ void	map_init(t_map *map)
 	map->n_path = NULL;
 }
 
-int process_map(char *filename)
+t_map *process_map(char *filename)
 {
     t_map *map;
 
     if (check_filename(filename))
-        return (1);
+        return (NULL);
 	else 
 	{
         map = malloc(sizeof(t_map));
         if (!map)  
 		{
             ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Memory allocation error\n", 2);
-            return (1);
+            return (NULL);
         }
         map = read_map(open(filename, O_RDONLY, 0666), map);
         map_init(map);
         map_fill(map->map, map);
-        if (map_check(map)) 
-		{
-            free_map(&map);
-            return (1);
-        }
-        map_printing(map);
-        free_map(&map);
+		map_check(map);
     }
-    return (0);
+    return (map);
 }
 
-void draw_square(t_gameworld *world, int x_start, int y_start, int size, int color)
+void draw_square(t_map *world, int x_start, int y_start, int size, int color)
 {
     int x;
 	int y;
@@ -129,7 +123,7 @@ void draw_square(t_gameworld *world, int x_start, int y_start, int size, int col
     }
 }
 
-void draw_map(t_gameworld *world)
+void draw_map(t_map *world)
 {
     int x;
 	int y;
@@ -152,29 +146,36 @@ void draw_map(t_gameworld *world)
 
 int main(int ac, char **av)
 {
-	t_gameworld world; 
+	t_gameworld world;
 
-	// if (ac != 2)
-	// {
-	// 	ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
-	// 	return (1);
-	// }
-	(void)ac;
-	(void)av;
-	//process_map(av[1])
-	
-	char *static_map[] = {
-		"111111111111111111",
-		"100000000000000001",
-		"100000000000000001",
-		"100001000000N00001",
-		"100010000000000001",
-		"100000000011100001",
-		"100000000000000001",
-		"111111111111111111",
-		NULL
-	};
-	world.map = static_map;
+	if (ac != 2)
+	{
+		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
+		return (1);
+	}
+	// (void)ac;
+	// (void)av;
+	world.map_info = NULL;
+	if (ac == 2)
+		world.map_info = process_map(av[1]);
+	if (!world.map_info)
+	{
+		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2);
+		return (1);
+	}
+	// char *static_map[] = {
+	// 	"111111111111111111",
+	// 	"100000000000000001",
+	// 	"100000000000000001",
+	// 	"100001000000N00001",
+	// 	"100010000000000001",
+	// 	"100000000011100001",
+	// 	"100000000000000001",
+	// 	"111111111111111111",
+	// 	NULL
+	// };
+	// world.map = static_map;
+
 	world.mlx = mlx_init();
 	if (!world.mlx)
 	{
@@ -191,7 +192,7 @@ int main(int ac, char **av)
 	}
 
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	draw_map(&world);
+	draw_map(world.map_info);
 	if (!world.mlximage)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);

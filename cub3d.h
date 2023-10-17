@@ -25,6 +25,9 @@ typedef struct s_map
 	char	**map_clone;
 	char	*n_path;
 	char	*e_path;
+	void	*mlx;
+	void	*window;
+	void	*mlximage;
 	char	*w_path;
 	char	*s_path;
 	char	*f_color;
@@ -55,7 +58,8 @@ typedef struct s_character
 
 typedef struct s_gameworld
 {
-	char			**map;
+	t_map			*map_info;
+	char			**map;			
     t_character		player;
 	void			*mlx;
 	void			*window;
