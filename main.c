@@ -156,8 +156,6 @@ int main(int ac, char **av)
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
 		return (1);
 	}
-	// (void)ac;
-	// (void)av;
 	world.map_info = NULL;
 	if (ac == 2)
 		world.map_info = process_map(av[1]);
@@ -166,18 +164,6 @@ int main(int ac, char **av)
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2);
 		return (1);
 	}
-	// char *static_map[] = {
-	// 	"111111111111111111",
-	// 	"100000000000000001",
-	// 	"100000000000000001",
-	// 	"100001000000N00001",
-	// 	"100010000000000001",
-	// 	"100000000011100001",
-	// 	"100000000000000001",
-	// 	"111111111111111111",
-	// 	NULL
-	// };
-	// world.map = static_map;
 	world.mlx = mlx_init();
 	if (!world.mlx)
 	{
