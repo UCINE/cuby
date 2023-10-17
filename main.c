@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 02:31:02 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/17 02:32:39 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int main(int ac, char **av)
 	// (void)ac;
 	// (void)av;
 	world.map_info = NULL;
-	if (process_map(av[1]))
+	if (ac == 2)
 		world.map_info = process_map(av[1]);
 	if (!world.map_info)
 	{
