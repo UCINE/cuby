@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 09:53:21 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:16:41 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,17 @@ void draw_square(t_gameworld *world, int x_start, int y_start, int size, int col
 {
     int x;
 	int y;
-
-    for (y = y_start; y < y_start + size; y++)
+	
+	y = y_start;
+    while (y < y_start + size)
     {
-        for (x = x_start; x < x_start + size; x++)
+		x = x_start;
+        while (x < x_start + size)
         {
 			mlx_pixel_put(world->mlx, world->window, x, y, color);
+			x++;
         }
+		y++;
     }
 }
 
@@ -129,9 +133,11 @@ void draw_map(t_map *world, t_gameworld *game)
     int x;
 	int y;
 
-    for (y = 0; world->map[y]; y++)
+	y = 0;
+    while (world->map[y])
     {
-        for (x = 0; world->map[y][x]; x++)
+		x = 0;
+        while (world->map[y][x])
         {
             if (world->map[y][x] == '1')
             {
@@ -145,7 +151,9 @@ void draw_map(t_map *world, t_gameworld *game)
 			{
 				draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x00FF00);
 			}
+			x++;
         }
+		y++;
     }
 }
 
