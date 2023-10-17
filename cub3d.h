@@ -15,7 +15,7 @@
 
 # define SCREEN_WIDTH 1152
 # define SCREEN_HEIGHT 512
-# define TILE_SIZE 64
+// define TILE_SIZE 64
 
 typedef struct s_map
 {
@@ -55,6 +55,7 @@ typedef struct s_character
 
 typedef struct s_gameworld
 {
+	int				tile_size;
 	t_map			*map_info;
 	char			**map;			
     t_character		player;
@@ -79,4 +80,5 @@ int 	check_south(t_map *map, int i);
 int		check_directions(t_map *map);
 int 	check_c_color(t_map *map);
 int 	check_f_color(t_map *map);
+int 	calculatetilesize(char **map);
 #endif

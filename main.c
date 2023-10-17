@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 02:32:39 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/17 04:29:26 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,16 @@ void draw_map(t_map *world, t_gameworld *game)
         {
             if (world->map[y][x] == '1')
             {
-                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0xFFFFFF);
+                draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0xFFFFFF);
             }
             else if (world->map[y][x] == '0')
             {
-                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x000000);
+                draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x000000);
             }
-			else
-				draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x00FF00);
+			else if (world->map[y][x] == 'N')
+			{
+				draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x00FF00);
+			}
         }
     }
 }
@@ -157,8 +159,8 @@ int main(int ac, char **av)
 		return (1);
 	}
 	world.map_info = NULL;
-	if (ac == 2)
-		world.map_info = process_map(av[1]);
+	world.tile_size = 0;
+	world.map_info = process_map(av[1]);
 	if (!world.map_info)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2);
@@ -177,6 +179,8 @@ int main(int ac, char **av)
 		free(world.mlx);
 		return (1);
 	}
+	world.tile_size = calculatetilesize(world.map_info->map);
+	printf("Tile Size: %d\n", world.tile_size);
 	draw_map(world.map_info, &world);
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!world.mlximage)
