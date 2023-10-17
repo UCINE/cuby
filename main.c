@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/15 02:02:39 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/17 02:31:02 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,13 @@ t_map *process_map(char *filename)
         map = read_map(open(filename, O_RDONLY, 0666), map);
         map_init(map);
         map_fill(map->map, map);
-		map_check(map);
-    }
+		if (map_check(map))
+			return NULL;
+	}
     return (map);
 }
 
-void draw_square(t_map *world, int x_start, int y_start, int size, int color)
+void draw_square(t_gameworld *world, int x_start, int y_start, int size, int color)
 {
     int x;
 	int y;
@@ -118,28 +119,30 @@ void draw_square(t_map *world, int x_start, int y_start, int size, int color)
     {
         for (x = x_start; x < x_start + size; x++)
         {
-            mlx_pixel_put(world->mlx, world->window, x, y, color);
+			mlx_pixel_put(world->mlx, world->window, x, y, color);
         }
     }
 }
 
-void draw_map(t_map *world)
+void draw_map(t_map *world, t_gameworld *game)
 {
     int x;
 	int y;
-	
-    for (y = 0; y < 8; y++)
+
+    for (y = 0; world->map[y]; y++)
     {
-        for (x = 0; x < 18; x++)
+        for (x = 0; world->map[y][x]; x++)
         {
             if (world->map[y][x] == '1')
             {
-                draw_square(world, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0xFFFFFF);
+                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0xFFFFFF);
             }
             else if (world->map[y][x] == '0')
             {
-                draw_square(world, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x000000);
+                draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x000000);
             }
+			else
+				draw_square(game, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 0x00FF00);
         }
     }
 }
@@ -156,7 +159,7 @@ int main(int ac, char **av)
 	// (void)ac;
 	// (void)av;
 	world.map_info = NULL;
-	if (ac == 2)
+	if (process_map(av[1]))
 		world.map_info = process_map(av[1]);
 	if (!world.map_info)
 	{
@@ -175,14 +178,12 @@ int main(int ac, char **av)
 	// 	NULL
 	// };
 	// world.map = static_map;
-
 	world.mlx = mlx_init();
 	if (!world.mlx)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to initialize MLX\n", 2);
 		return (1);
 	}
-
 	world.window = mlx_new_window(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
 	if (!world.window)
 	{
@@ -190,9 +191,8 @@ int main(int ac, char **av)
 		free(world.mlx);
 		return (1);
 	}
-
+	draw_map(world.map_info, &world);
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	draw_map(world.map_info);
 	if (!world.mlximage)
 	{
 		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);

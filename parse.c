@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:02:46 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/14 23:35:32 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/17 02:11:14 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	directions(t_map *map, char **str, int *i, int j)
 {
 	if (!ft_strncmp(str[(*i)], "NO", 2))
-		{
+	{
 		while (str[(*i)] && str[(*i)][j++] != '.')
 		map->n_path = ft_strdup(str[(*i)] + j);
 	}
