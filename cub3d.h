@@ -72,11 +72,11 @@ int		map_check(t_map *map);
 void	map_printing(t_map *map);
 void	get_map(char **str, t_map *map);
 void	free_str(char **str);
-int check_west(t_map *map, int i);
-int check_east(t_map *map, int i);
-int check_north(t_map *map, int i);
-int check_south(t_map *map, int i);
-int	check_directions(t_map *map);
-int check_c_color(t_map *map);
-int check_f_color(t_map *map);
+int 	check_west(t_map *map, int i);
+int 	check_east(t_map *map, int i);
+int 	check_north(t_map *map, int i);
+int 	check_south(t_map *map, int i);
+int		check_directions(t_map *map);
+int 	check_c_color(t_map *map);
+int 	check_f_color(t_map *map);
 #endif
