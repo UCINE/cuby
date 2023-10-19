@@ -6,7 +6,7 @@
 #    By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/10/17 11:41:51 by lahamoun         ###   ########.fr        #
+#    Updated: 2023/10/19 15:04:20 by lahamoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,8 +34,6 @@ RED=\033[0;31m
 GREEN=\033[0;32m
 NC=\033[0m
 
-.PHONY: all clean fclean re check_relink
-
 SRCS = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR2)*.c)
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(patsubst $(SRC_DIR2)%.c,$(OBJ_DIR)%.o,$(SRCS)))
 DEPS = $(OBJS:.o=.d)
@@ -46,7 +44,7 @@ all: $(NAME)
 
 relink:
 	@if [ -f $(NAME) ] && [ $(NAME) -nt $(word 1,$(OBJS)) ]; then \
-		echo "HUH!!"; \
+		echo "HUH?, change something first!"; \
 		false; \
 	fi
 
