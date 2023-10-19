@@ -12,7 +12,7 @@
 // # define A 0
 // # define S 1
 // # define D 2
-
+# define player_size 10
 # define SCREEN_WIDTH 1152
 # define SCREEN_HEIGHT 512
 // define TILE_SIZE 64

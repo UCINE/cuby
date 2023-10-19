@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 10:16:41 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:25:10 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void draw_map(t_map *world, t_gameworld *game)
             }
 			else if (world->map[y][x] == 'N')
 			{
-				draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x00FF00);
+				draw_square(game, x * game->tile_size, y * game->tile_size, player_size, 0x00FF00);
 			}
 			x++;
         }
