@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/20 23:24:07 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/20 23:46:06 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,8 @@ int main(int ac, char **av)
 		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
 			, free_map(world.mlx), 1);
 	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
+	// mlx_hook(world.window, 53, 1L << 0 , (void *)exit, &world);
 	mlx_hook(world.window, 17, 1L << 17, (void *)exit, &world);
-	mlx_hook(world.window, 2, 1L << 2, (void *)exit, &world);
 	mlx_loop(world.mlx);
 	return (0);
 }
