@@ -32,6 +32,8 @@ typedef struct s_map
 	int		player;
 	int		max_line;
 	int		map_len;
+	int		player_x;
+	int		player_y;
 }	t_map;
 
 typedef struct s_point2D

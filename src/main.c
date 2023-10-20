@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/19 15:25:10 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/20 23:24:07 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,9 @@ void	map_init(t_map *map)
 	map->w_path = NULL;
 	map->s_path = NULL;
 	map->n_path = NULL;
+	map->player = 0;
+	map->player_x = 0;
+	map->player_y = 0;
 }
 
 t_map *process_map(char *filename)
@@ -140,17 +143,14 @@ void draw_map(t_map *world, t_gameworld *game)
         while (world->map[y][x])
         {
             if (world->map[y][x] == '1')
-            {
                 draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0xFFFFFF);
-            }
             else if (world->map[y][x] == '0')
-            {
                 draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x000000);
-            }
-			else if (world->map[y][x] == 'N')
-			{
+			else if (world->map[y][x] == 'N' || world->map[y][x] == 'S'
+				|| world->map[y][x] == 'E' || world->map[y][x] == 'W')
 				draw_square(game, x * game->tile_size, y * game->tile_size, player_size, 0x00FF00);
-			}
+			else
+				draw_square(game, x * game->tile_size, y * game->tile_size, game->tile_size, 0x0F0000);
 			x++;
         }
 		y++;
@@ -162,43 +162,31 @@ int main(int ac, char **av)
 	t_gameworld world;
 
 	if (ac != 2)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2);
-		return (1);
-	}
+		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2), 1);
 	world.map_info = NULL;
 	world.tile_size = 0;
 	world.map_info = process_map(av[1]);
 	if (!world.map_info)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2);
-		return (1);
-	}
+		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2), 1);
 	world.mlx = mlx_init();
 	if (!world.mlx)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to initialize MLX\n", 2);
-		return (1);
-	}
+		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to initialize MLX\n", 2), 1);
 	world.window = mlx_new_window(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
 	if (!world.window)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2);
-		free(world.mlx);
-		return (1);
-	}
+		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
+			, free_map(world.mlx), 1);
 	world.tile_size = calculatetilesize(world.map_info->map);
 	printf("Tile Size: %d\n", world.tile_size);
+	printf("player_x: %d\n", world.map_info->player_x);
+	printf("player_y: %d\n", world.map_info->player_y);
 	draw_map(world.map_info, &world);
 	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (!world.mlximage)
-	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create image\n", 2);
-		free(world.mlx);
-		return (1);
-	}
-
+		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
+			, free_map(world.mlx), 1);
 	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
+	mlx_hook(world.window, 17, 1L << 17, (void *)exit, &world);
+	mlx_hook(world.window, 2, 1L << 2, (void *)exit, &world);
 	mlx_loop(world.mlx);
 	return (0);
 }

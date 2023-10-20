@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/17 02:11:50 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/20 23:18:32 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,10 @@ int	check_charset(t_map *map, char charset, char *str)
 		{
 			if (charset == 'N' || charset == 'S'
 				|| charset == 'E' || charset == 'W')
-					map->player++;
+			{
+				map->player++;
+				return (2);	
+			}
 			return (1);
 		}
 		i++;
@@ -63,18 +66,25 @@ int	check_chars(t_map *map)
 {
 	int	i;
 	int	j;
+	int	save;
 
 	j = 0;
 	i = 0;
-	map->player = 0;
+	save = 0;
 	while(map->map[i])
 	{
 		j = 0;
 		while(map->map[i][j])
 		{
-			if (!check_charset(map, map->map[i][j], "01NSEW "))
+			save = check_charset(map, map->map[i][j], "01NSEW \t");
+			if (!save)
 				return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid charset", 2),
 					1);
+			else if (save == 2)
+			{
+				map->player_x = i;
+				map->player_y = j;
+			}
 			j++;
 		}
 		i++;

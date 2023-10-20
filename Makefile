@@ -6,7 +6,7 @@
 #    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/10/20 22:26:54 by ojamal           ###   ########.fr        #
+#    Updated: 2023/10/20 23:29:07 by ojamal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,8 @@ ifeq ($(UNAME_S),Darwin)
     LINK_FLAGS = -L $(LIBFT_DIR) -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
 endif
 
-RED=\033[0;31m
-GREEN=\033[0;32m
+RED=\033[1;31m
+GREEN=\033[1;32m
 NC=\033[0m
 
 SRCS = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR2)*.c)
@@ -48,11 +48,10 @@ relink:
 		false; \
 	fi
 
-$(NAME): relink $(LIBFT) $(OBJS)
-	@echo "$(GREEN)Linking...$(NC)"
+$(NAME):  $(LIBFT) $(OBJS)
+	@echo "$(GREEN)\nLinking...\n$(NC)"
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LINK_FLAGS) -o $(NAME)
-	@echo "$(GREEN)Done!$(NC)"
-	@echo "$(GREEN)"
+	@echo "$(GREEN)Done!✅✅✅$(NC)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
@@ -70,10 +69,11 @@ $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	@echo "$(RED)Cleaning up...$(NC)"
+	@echo "$(RED)Cleaning up...\n$(NC)"
 	@sleep 0.5
 	@rm -f $(OBJS) $(DEPS)
 	@$(MAKE) clean -C $(LIBFT_DIR)
+	@echo "$(GREEN)Done!✅✅✅$(NC)"
 
 fclean: clean
 	@rm -f $(NAME)
