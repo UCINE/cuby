@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+         #
+#    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/10/19 15:04:20 by lahamoun         ###   ########.fr        #
+#    Updated: 2023/10/20 22:26:54 by ojamal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,33 +50,35 @@ relink:
 
 $(NAME): relink $(LIBFT) $(OBJS)
 	@echo "$(GREEN)Linking...$(NC)"
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LINK_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LINK_FLAGS) -o $(NAME)
 	@echo "$(GREEN)Done!$(NC)"
 	@echo "$(GREEN)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
 	@echo "$(GREEN)Compiling $<...$(NC)"
-	$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 $(OBJ_DIR)%.o: $(SRC_DIR2)%.c
 	@mkdir -p $(@D)
 	@echo "$(GREEN)Compiling $<...$(NC)"
-	$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
 
 $(OBJS): | $(LIBFT)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
 	@echo "$(RED)Cleaning up...$(NC)"
-	rm -f $(OBJS) $(DEPS)
-	$(MAKE) clean -C $(LIBFT_DIR)
+	@sleep 0.5
+	@rm -f $(OBJS) $(DEPS)
+	@$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
-	rm -f $(NAME)
-	$(MAKE) fclean -C $(LIBFT_DIR)
+	@rm -f $(NAME)
+	@sleep 0.5
+	@$(MAKE) fclean -C $(LIBFT_DIR)
 
 re: fclean all
 
