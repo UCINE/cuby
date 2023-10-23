@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/23 18:51:31 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:57:50 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ void    move_player(t_gameworld *world, t_keys key)
 
 void    rotate_vector(double angle, t_point2D *vector)
 {
-    double cosAngle = cos(ROTATION_SPEED * angle);
-    double sinAngle = sin(ROTATION_SPEED * angle);
+    double cosAngle;
+    double sinAngle;
+    double prev_x;
 
-    double prev_x = vector->x;
+    cosAngle = cos(ROTATION_SPEED * angle);
+    sinAngle = sin(ROTATION_SPEED * angle);
+    prev_x = vector->x;
     vector->x = prev_x * cosAngle - vector->y * sinAngle;
     vector->y = prev_x * sinAngle + vector->y * cosAngle;
 }
