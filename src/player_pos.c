@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/23 18:57:50 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:00:12 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void    rotate_player(t_gameworld *world, double angle)
     rotate_vector(angle, &world->player.direction);
     rotate_vector(angle, &world->player.viewslice);
 }
+
 
 int key_hendler(int key, t_gameworld *world)
 {
