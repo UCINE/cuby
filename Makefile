@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
+#    By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/10/20 23:29:07 by ojamal           ###   ########.fr        #
+#    Updated: 2023/10/23 17:52:02 by lahamoun         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ifeq ($(UNAME_S),Linux)
     LINK_FLAGS = -L $(LIBFT_DIR) -lft -L../minilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 endif
 ifeq ($(UNAME_S),Darwin)
-    LINK_FLAGS = -L $(LIBFT_DIR) -lft -Lmlx -lmlx -framework OpenGL -framework AppKit
+    LINK_FLAGS = -L $(LIBFT_DIR) -lft -lmlx -framework OpenGL -framework AppKit
 endif
 
 RED=\033[1;31m
@@ -38,7 +38,7 @@ SRCS = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR2)*.c)
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(patsubst $(SRC_DIR2)%.c,$(OBJ_DIR)%.o,$(SRCS)))
 DEPS = $(OBJS:.o=.d)
 
-all: $(NAME)
+all: relink $(NAME)
 
 -include $(DEPS)
 
@@ -51,7 +51,7 @@ relink:
 $(NAME):  $(LIBFT) $(OBJS)
 	@echo "$(GREEN)\nLinking...\n$(NC)"
 	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LINK_FLAGS) -o $(NAME)
-	@echo "$(GREEN)Done!✅✅✅$(NC)"
+	@echo "$(GREEN)Done!✅$(NC)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@mkdir -p $(@D)
@@ -73,7 +73,7 @@ clean:
 	@sleep 0.5
 	@rm -f $(OBJS) $(DEPS)
 	@$(MAKE) clean -C $(LIBFT_DIR)
-	@echo "$(GREEN)Done!✅✅✅$(NC)"
+	@echo "$(GREEN)Done!✅$(NC)"
 
 fclean: clean
 	@rm -f $(NAME)

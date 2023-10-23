@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/20 23:46:06 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:53:09 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_map *process_map(char *filename)
 
     if (check_filename(filename))
         return (NULL);
-	else 
+	else
 	{
         map = malloc(sizeof(t_map));
         if (!map)  
@@ -185,8 +185,8 @@ int main(int ac, char **av)
 		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
 			, free_map(world.mlx), 1);
 	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
-	// mlx_hook(world.window, 53, 1L << 0 , (void *)exit, &world);
-	mlx_hook(world.window, 17, 1L << 17, (void *)exit, &world);
+	mlx_hook(world.window, 17, 0, (void *)exit, &world);
+	mlx_hook(world.window, 2, 1L<<0, key_hendler, &world);
 	mlx_loop(world.mlx);
 	return (0);
 }

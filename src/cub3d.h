@@ -5,6 +5,7 @@
 # include "../minilibx_opengl_20191021/mlx.h"
 # include<stdbool.h>
 # include <ctype.h>
+# include <math.h>
 # include "../get_next_line/get_next_line.h"
 
 // # define ESC 53
@@ -15,7 +16,20 @@
 # define player_size 10
 # define SCREEN_WIDTH 1152
 # define SCREEN_HEIGHT 512
-// define TILE_SIZE 64
+# define PLAYER_SPEED 0.1
+# define ROTATION_SPEED 0.2
+# define MLX_KEY_W 13
+# define MLX_KEY_S 1
+# define MLX_KEY_A 0
+# define MLX_KEY_D 2
+# define KEY_ESC 53
+
+typedef enum e_keys {
+    key_forward = MLX_KEY_W,
+    key_backward = MLX_KEY_S,
+    key_left = MLX_KEY_A,
+    key_right = MLX_KEY_D,
+}   t_keys;
 
 typedef struct s_map
 {
@@ -35,6 +49,7 @@ typedef struct s_map
 	int		player_x;
 	int		player_y;
 }	t_map;
+
 
 typedef struct s_point2D
 {
@@ -59,12 +74,12 @@ typedef struct s_gameworld
 {
 	int				tile_size;
 	t_map			*map_info;
-	char			**map;			
+	char			**map;		
     t_character		player;
 	void			*mlx;
 	void			*window;
 	void		 	*mlximage;
-    t_map			info;      
+    t_map			info;
     uint32_t		colors[2];
 }	t_gameworld;
 
@@ -83,4 +98,5 @@ int		check_directions(t_map *map);
 int 	check_c_color(t_map *map);
 int 	check_f_color(t_map *map);
 int 	calculatetilesize(char **map);
+int 	key_hendler(int key, t_gameworld *world);
 #endif
