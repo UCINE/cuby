@@ -23,6 +23,7 @@
 # define MLX_KEY_A 0
 # define MLX_KEY_D 2
 # define KEY_ESC 53
+# define SQUARE_SIZE 30
 
 typedef enum e_keys {
     key_forward = MLX_KEY_W,
@@ -99,4 +100,5 @@ int 	check_c_color(t_map *map);
 int 	check_f_color(t_map *map);
 int 	calculatetilesize(char **map);
 int 	key_hendler(int key, t_gameworld *world);
+void	draw_square(t_gameworld *world, int x_start, int y_start, int size, int color);
 #endif
