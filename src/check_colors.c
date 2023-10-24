@@ -6,70 +6,51 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:43:17 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/14 23:48:42 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/24 11:43:19 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int check_c_color(t_map *map)
+int	valid_color(char *color, int *i, int *j)
 {
-    int i;
+	int val;
 
-    i = 0;
-    while (map->c_color[i] == ' ' || map->c_color[i] == '\t')
-        i++;
-    while(map->c_color[i])
-    {
-        if (map->c_color[i] == ',' && ft_isdigit(map->c_color[i + 1]))
-        {
-            if (ft_atoi(&map->c_color[i + 1]) >= 0 && ft_atoi(&map->c_color[i + 1]) <= 255)
-                return (1);
-            else
-            {
-                ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n",
-                    2);
-                return (1);
-            }
-        }
-        else if (map->c_color[i] == ' ' || map->c_color[i] == '\t')
-            return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n",
-                2), 1);
-        else if (!map->c_color[i + 1])
-            return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n",
-                2), 1);
-        i++;
-    }
-    return (0);
+	val = 0;
+	while(ft_isdigit(color[(*i)]))
+	{
+		val = val * 10 + (color[(*i)++] - '0');
+		(*j)++;
+	}
+	if (val >= 0 && val <= 255)
+		val = 0;
+	else
+		return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n", 2)
+			, 1);
+	return (0);
 }
 
-int check_f_color(t_map *map)
+int check_colors(char *color)
 {
-    int i;
+	int i;
+	int j;
+	int val;
 
-    i = 0;
-    while (map->f_color[i] == ' ' || map->f_color[i] == '\t')
-        i++;
-    while(map->f_color[i])
-    {
-        if (map->f_color[i] == ',' && ft_isdigit(map->f_color[i + 1]))
-        {
-            if (ft_atoi(&map->f_color[i + 1]) >= 0 && ft_atoi(&map->f_color[i + 1]) <= 255)
-                return (1);
-            else
-            {
-                ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid floor color\n",
-                    2);
-                return (1);
-            }
-        }
-        else if (map->f_color[i] == ' ' || map->f_color[i] == '\t')
-            return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid floor color\n",
-                2), 1);
-        else if (!map->f_color[i + 1])
-            return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid floor color\n",
-                2), 1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	j = 0;
+	val = 0;
+	while (color[i] == ' ' || color[i] == '\t')
+		i++;
+	while(color[i])
+	{
+		if (ft_isdigit(color[i]))
+			valid_color(color, &i, &j);
+		if (j > 3)
+			return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n", 2), 1);
+		else if (color[i] == ',')
+			j = 0;
+		i++;
+	}
+	return (0);
 }
+

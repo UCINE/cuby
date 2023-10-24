@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/23 18:53:09 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:28:40 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,27 +166,27 @@ int main(int ac, char **av)
 	world.map_info = NULL;
 	world.tile_size = 0;
 	world.map_info = process_map(av[1]);
-	if (!world.map_info)
-		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2), 1);
-	world.mlx = mlx_init();
-	if (!world.mlx)
-		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to initialize MLX\n", 2), 1);
-	world.window = mlx_new_window(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
-	if (!world.window)
-		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
-			, free_map(world.mlx), 1);
-	world.tile_size = calculatetilesize(world.map_info->map);
-	printf("Tile Size: %d\n", world.tile_size);
-	printf("player_x: %d\n", world.map_info->player_x);
-	printf("player_y: %d\n", world.map_info->player_y);
-	draw_map(world.map_info, &world);
-	world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	if (!world.mlximage)
-		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
-			, free_map(world.mlx), 1);
-	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
-	mlx_hook(world.window, 17, 0, (void *)exit, &world);
-	mlx_hook(world.window, 2, 1L<<0, key_hendler, &world);
-	mlx_loop(world.mlx);
+	// if (!world.map_info)
+	// 	return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to process map\n", 2), 1);
+	// world.mlx = mlx_init();
+	// if (!world.mlx)
+	// 	return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to initialize MLX\n", 2), 1);
+	// world.window = mlx_new_window(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "CUB3D");
+	// if (!world.window)
+	// 	return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
+	// 		, free_map(world.mlx), 1);
+	// world.tile_size = calculatetilesize(world.map_info->map);
+	// printf("Tile Size: %d\n", world.tile_size);
+	// printf("player_x: %d\n", world.map_info->player_x);
+	// printf("player_y: %d\n", world.map_info->player_y);
+	// draw_map(world.map_info, &world);
+	// world.mlximage = mlx_new_image(world.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	// if (!world.mlximage)
+	// 	return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
+	// 		, free_map(world.mlx), 1);
+	// // mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
+	// mlx_hook(world.window, 17, 0, (void *)exit, &world);
+	// mlx_hook(world.window, 2, 1L<<0, key_hendler, &world);
+	// mlx_loop(world.mlx);
 	return (0);
 }
