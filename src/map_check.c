@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/20 23:18:32 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/24 11:49:16 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int	check_for_textures(t_map *map)
 	if (!map->w_path)
 		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid west texture",
 				2), 1);
+	if (check_path(map->n_path) || check_path(map->s_path)
+		|| check_path(map->w_path) || check_path(map->e_path))
+		return (1);
 	return (0);
 }
 
@@ -37,6 +40,8 @@ int	check_for_colors(t_map *map)
 	if (!map->c_color)
 		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid celling color",
 				2), 1);
+	if (check_colors(map->f_color) || check_colors(map->c_color))
+		return (1);
 	return (0);
 }
 
@@ -53,7 +58,7 @@ int	check_charset(t_map *map, char charset, char *str)
 				|| charset == 'E' || charset == 'W')
 			{
 				map->player++;
-				return (2);	
+				return (2);
 			}
 			return (1);
 		}
