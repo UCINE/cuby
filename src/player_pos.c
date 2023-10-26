@@ -14,11 +14,21 @@
 
 int is_walkable_tile(t_gameworld *world, int x, int y)
 {
-    printf("ok");
+    printf("Checking tile: (%d, %d)\n", x, y);
+
     if (x < 0 || y < 0 || y >= world->map_info->map_len || x >= world->map_info->max_line)
+    {
+        printf("Tile is out of bounds.\n");
         return (0);
+    }
+
     if (world->map_info->map[y][x] == '1')
-        return (0); 
+    {
+        printf("Tile is a wall.\n");
+        return (0);
+    }
+
+    printf("Tile is walkable.\n");
     return (1);
 }
 
