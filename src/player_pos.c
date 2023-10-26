@@ -6,63 +6,42 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/24 23:38:36 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/26 16:29:11 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    move_player(t_gameworld *world, t_keys key)
+int is_walkable_tile(t_gameworld *world, int x, int y)
 {
-    double dy;
-    double dx;
-    
-    printf("Yo");
-    dy = world->player.direction.y;
-    dx = world->player.direction.x;
-    draw_square(world, world->map_info->player_y , world->map_info->player_x, player_size, 0x000000);
+    printf("ok");
+    if (x < 0 || y < 0 || y >= world->map_info->map_len || x >= world->map_info->max_line)
+        return (0);
+    if (world->map_info->map[y][x] == '1')
+        return (0); 
+    return (1);
+}
+
+void move_player(t_gameworld *world, t_keys key)
+{
+    int new_x = world->map_info->player_x;
+    int new_y = world->map_info->player_y;
+
     if (key == key_forward)
-    {
-        world->map_info->player_x -=  1;
-        printf("(%i,%i)\n",world->map_info->player_x,world->map_info->player_y);
-        //world->map_info->player_y += 1 * PLAYER_SPEED;
-    }
+        new_x -= 1;
     else if (key == key_backward)
-    {
-        world->map_info->player_x += 1;
-       // world->map_info->player_y -= dy * PLAYER_SPEED;
-    }
+        new_x += 1;
     else if (key == key_left)
-    {
-        world->map_info->player_y -=1;
-        //world->map_info->player_y += dx * PLAYER_SPEED;
-    }
+        new_y -= 1;
     else if (key == key_right)
-    {
-      world->map_info->player_y += 1;
-    }
-    //  draw_square(world, world->map_info->player_x * world->tile_size, world->map_info->player_y * world->tile_size, player_size, 0x0F0000);
-      draw_square(world, world->map_info->player_y, world->map_info->player_x , player_size, 0x0FF000);
-    /*if (key == key_forward)
-    {
-        world->map_info->player_x += dx * PLAYER_SPEED;
-        world->map_info->player_y += dy * PLAYER_SPEED;
-    }
-    else if (key == key_backward)
-    {
-        world->map_info->player_x -= dx * PLAYER_SPEED;
-        world->map_info->player_y -= dy * PLAYER_SPEED;
-    }
-    else if (key == key_left)
-    {
-        world->map_info->player_x -= dy * PLAYER_SPEED;
-        world->map_info->player_y += dx * PLAYER_SPEED;
-    }
-    else if (key == key_right)
-    {
-        world->map_info->player_x += dy * PLAYER_SPEED;
-        world->map_info->player_y -= dx * PLAYER_SPEED;
-    }*/
+        new_y += 1;
+
+    if (!is_walkable_tile(world, new_x, new_y))
+        return;
+    draw_square(world, world->map_info->player_y , world->map_info->player_x, player_size, 0x000000);
+    world->map_info->player_x = new_x;
+    world->map_info->player_y = new_y;
+    draw_square(world, world->map_info->player_y, world->map_info->player_x , player_size, 0x0FF000);
 }
 
 void    rotate_vector(double angle, t_point2D *vector)
@@ -84,23 +63,22 @@ void    rotate_player(t_gameworld *world, double angle)
     rotate_vector(angle, &world->player.viewslice);
 }
 
-
 int key_hendler(int key, t_gameworld *world)
 {
-    printf("%d\n", key);
-    if (key == MLX_KEY_W)
-        {
-            printf("103\n");
-            move_player(world, key_forward);}
-    else if (key == MLX_KEY_S)
+    if (key == key_forward)
+        move_player(world, key_forward);
+    else if (key == key_backward)
         move_player(world, key_backward);
-    else if (key == MLX_KEY_A)
+    else if (key == key_left)
         move_player(world, key_left);
-    else if (key == MLX_KEY_D)
+    else if (key == key_right)
         move_player(world, key_right);
+    // else if (key == key_left)
+    //     rotate_player(world, -1);
+    // else if (key == key_right)
+    //     rotate_player(world, 1);
     else if (key == KEY_ESC)
         exit(0);
-    // else
-    // printf("Unexpected key: %d\n", key);
     return (0);
 }
+

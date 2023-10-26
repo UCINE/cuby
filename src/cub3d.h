@@ -85,7 +85,7 @@ typedef struct s_gameworld
 }	t_gameworld;
 
 
-
+int 	is_walkable_tile(t_gameworld *world, int x, int y);
 void	map_fill(char **str, t_map *map);
 int		map_check(t_map *map);
 void	map_printing(t_map *map);
