@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-int is_walkable_tile(t_gameworld *world, int x, int y)
+int is_walkable_tile(t_gameworld *world, int y, int x)
 {
     printf("Checking tile: (%d, %d)\n", x, y);
 
