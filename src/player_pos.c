@@ -46,7 +46,7 @@ void move_player(t_gameworld *world, t_keys key)
     else if (key == key_right)
         new_y += 1;
 
-    if (!is_walkable_tile(world, new_x, new_y))
+    if (!is_walkable_tile(world, new_y, new_x))
         return;
     draw_square(world, world->map_info->player_y , world->map_info->player_x, player_size, 0x000000);
     world->map_info->player_x = new_x;
