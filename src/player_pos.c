@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/27 10:05:06 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/27 17:41:30 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ int is_walkable_tile(t_gameworld *world, int x, int y)
     printf("Tile is walkable.\n");
     return (1);
 }
-int pixel_to_grid(int pixel_coordinate, int tile_size) {
-    return pixel_coordinate / tile_size;
+int pixel_to_grid(int pixel_coordinate, int tile_size)
+{
+    return (pixel_coordinate / tile_size);
 }
 
 void move_player(t_gameworld *world, t_keys key)
@@ -65,8 +66,6 @@ void move_player(t_gameworld *world, t_keys key)
     
     draw_square(world, world->map_info->player_x, world->map_info->player_y, player_size, 0x0FF000);  
 }
-
-
 
 void    rotate_vector(double angle, t_point2D *vector)
 {
