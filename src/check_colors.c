@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:43:17 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/24 11:43:19 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/26 23:23:57 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ int check_colors(char *color)
 {
 	int i;
 	int j;
-	int val;
 
 	i = 0;
 	j = 0;
-	val = 0;
 	while (color[i] == ' ' || color[i] == '\t')
 		i++;
 	while(color[i])

@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/24 11:49:16 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/27 10:08:53 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	check_chars(t_map *map)
 					1);
 			else if (save == 2)
 			{
-				map->player_x = i;
-				map->player_y = j;
+				map->player_y = i;
+				map->player_x = j;
 			}
 			j++;
 		}

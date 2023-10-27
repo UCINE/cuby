@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/26 16:29:11 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:05:06 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int is_walkable_tile(t_gameworld *world, int y, int x)
+int is_walkable_tile(t_gameworld *world, int x, int y)
 {
     printf("Checking tile: (%d, %d)\n", x, y);
 
@@ -31,6 +31,9 @@ int is_walkable_tile(t_gameworld *world, int y, int x)
     printf("Tile is walkable.\n");
     return (1);
 }
+int pixel_to_grid(int pixel_coordinate, int tile_size) {
+    return pixel_coordinate / tile_size;
+}
 
 void move_player(t_gameworld *world, t_keys key)
 {
@@ -38,21 +41,32 @@ void move_player(t_gameworld *world, t_keys key)
     int new_y = world->map_info->player_y;
 
     if (key == key_forward)
-        new_x -= 1;
+        new_y -= player_size;
     else if (key == key_backward)
-        new_x += 1;
+        new_y += player_size;
     else if (key == key_left)
-        new_y -= 1;
+        new_x -= player_size;
     else if (key == key_right)
-        new_y += 1;
+        new_x += player_size;
 
-    if (!is_walkable_tile(world, new_y, new_x))
+    printf("Current position: (%d, %d)\n", world->map_info->player_x, world->map_info->player_y);
+    printf("Proposed position: (%d, %d)\n", new_x, new_y);
+
+    int grid_x = pixel_to_grid(new_x, world->tile_size);
+    int grid_y = pixel_to_grid(new_y, world->tile_size);
+
+    if (!is_walkable_tile(world, grid_x, grid_y))
         return;
-    draw_square(world, world->map_info->player_y , world->map_info->player_x, player_size, 0x000000);
+    
+    draw_square(world, world->map_info->player_x, world->map_info->player_y, player_size, 0x000000);  
+    
     world->map_info->player_x = new_x;
     world->map_info->player_y = new_y;
-    draw_square(world, world->map_info->player_y, world->map_info->player_x , player_size, 0x0FF000);
+    
+    draw_square(world, world->map_info->player_x, world->map_info->player_y, player_size, 0x0FF000);  
 }
+
+
 
 void    rotate_vector(double angle, t_point2D *vector)
 {
@@ -75,6 +89,7 @@ void    rotate_player(t_gameworld *world, double angle)
 
 int key_hendler(int key, t_gameworld *world)
 {
+    printf("%d\n", key);
     if (key == key_forward)
         move_player(world, key_forward);
     else if (key == key_backward)
