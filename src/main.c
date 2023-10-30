@@ -155,6 +155,13 @@ void draw_map(t_map *world, t_gameworld *game)
         }
 		y++;
     }
+	// int xt = game->map_info->player_x, yt = game->map_info->player_y;
+	// for (int i = 0; i < 15;i++)
+	// {
+	// 	mlx_pixel_put(game->mlx, game->window, xt, yt, 0xf00);
+	// 	xt += cos(game->player.direction);
+	// 	yt -= sin(game->player.direction);
+	// }
 }
 
 int main(int ac, char **av)
