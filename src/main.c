@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 01:23:38 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/26 14:08:52 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/10/28 02:48:47 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int main(int ac, char **av)
 	if (!world.window)
 		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
 			, free_map(world.mlx), 1);
-	world.tile_size = calculatetilesize(world.map_info->map);
+	world.tile_size = 40;
 	printf("Tile Size: %d\n", world.tile_size);
 	printf("player_x: %d\n", world.map_info->player_x);
 	printf("player_y: %d\n", world.map_info->player_y);
@@ -184,7 +184,13 @@ int main(int ac, char **av)
 	if (!world.mlximage)
 		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Failed to create window\n", 2)
 			, free_map(world.mlx), 1);
+	world.player_fov = M_PI / 4;
+	world.ray_gap = world.player_fov / 60;
+	world.max_ray_distance = 100;
+
 	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
+	world.player.direction.x = 1.0;
+	world.player.direction.y = 0.0;
 	world.map_info->player_x *= world.tile_size;
 	world.map_info->player_y *= world.tile_size;
 	mlx_hook(world.window, 17, 0, (void *)exit, &world);

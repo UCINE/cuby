@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/27 10:05:06 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:57:59 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int is_walkable_tile(t_gameworld *world, int x, int y)
         printf("Tile is out of bounds.\n");
         return (0);
     }
+    printf("map len : (%d, %d)\n", world->map_info->map_len , world->map_info->max_line);
 
     if (world->map_info->map[y][x] == '1')
     {
@@ -31,40 +32,41 @@ int is_walkable_tile(t_gameworld *world, int x, int y)
     printf("Tile is walkable.\n");
     return (1);
 }
-int pixel_to_grid(int pixel_coordinate, int tile_size) {
-    return pixel_coordinate / tile_size;
+int pixel_to_grid(int pixel_coordinate, int tile_size)
+{
+    return (pixel_coordinate / tile_size);
 }
 
 void move_player(t_gameworld *world, t_keys key)
 {
-    int new_x = world->map_info->player_x;
-    int new_y = world->map_info->player_y;
+    int step_size = player_size / 4;
+    int old_x = world->map_info->player_x;
+    int old_y = world->map_info->player_y;
+    int new_x = old_x;
+    int new_y = old_y;
 
     if (key == key_forward)
-        new_y -= player_size;
+        new_y -= step_size;
     else if (key == key_backward)
-        new_y += player_size;
+        new_y += step_size;
     else if (key == key_left)
-        new_x -= player_size;
+        new_x -= step_size;
     else if (key == key_right)
-        new_x += player_size;
+        new_x += step_size;
 
-    printf("Current position: (%d, %d)\n", world->map_info->player_x, world->map_info->player_y);
-    printf("Proposed position: (%d, %d)\n", new_x, new_y);
-
-    int grid_x = pixel_to_grid(new_x, world->tile_size);
-    int grid_y = pixel_to_grid(new_y, world->tile_size);
-
-    if (!is_walkable_tile(world, grid_x, grid_y))
-        return;
-    
-    draw_square(world, world->map_info->player_x, world->map_info->player_y, player_size, 0x000000);  
-    
-    world->map_info->player_x = new_x;
-    world->map_info->player_y = new_y;
-    
-    draw_square(world, world->map_info->player_x, world->map_info->player_y, player_size, 0x0FF000);  
+    if (is_walkable_tile(world, pixel_to_grid(new_x, world->tile_size), pixel_to_grid(new_y, world->tile_size)) &&
+        is_walkable_tile(world, pixel_to_grid(new_x + player_size, world->tile_size), pixel_to_grid(new_y, world->tile_size)) &&
+        is_walkable_tile(world, pixel_to_grid(new_x, world->tile_size), pixel_to_grid(new_y + player_size, world->tile_size)) &&
+        is_walkable_tile(world, pixel_to_grid(new_x + player_size, world->tile_size), pixel_to_grid(new_y + player_size, world->tile_size)))
+    {
+        draw_square(world, old_x, old_y, player_size, 0x000000);
+        world->map_info->player_x = new_x;
+        world->map_info->player_y = new_y;
+        draw_square(world, new_x, new_y, player_size, 0x0FF000);
+    }
 }
+
+
 
 
 
@@ -81,11 +83,13 @@ void    rotate_vector(double angle, t_point2D *vector)
     vector->y = prev_x * sinAngle + vector->y * cosAngle;
 }
 
-void    rotate_player(t_gameworld *world, double angle)
+void rotate_player(t_gameworld *world, double angle)
 {
     rotate_vector(angle, &world->player.direction);
     rotate_vector(angle, &world->player.viewslice);
+    printf("Player Direction: (%f, %f)\n", world->player.direction.x, world->player.direction.y);
 }
+
 
 int key_hendler(int key, t_gameworld *world)
 {
@@ -98,12 +102,13 @@ int key_hendler(int key, t_gameworld *world)
         move_player(world, key_left);
     else if (key == key_right)
         move_player(world, key_right);
-    // else if (key == key_left)
-    //     rotate_player(world, -1);
-    // else if (key == key_right)
-    //     rotate_player(world, 1);
+    else if (key == MLX_KEY_Q)
+        rotate_player(world, -1);
+    else if (key == MLX_KEY_E)
+        rotate_player(world, 1);
     else if (key == KEY_ESC)
         exit(0);
     return (0);
 }
+
 
