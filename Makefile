@@ -38,15 +38,15 @@ SRCS = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR2)*.c)
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(patsubst $(SRC_DIR2)%.c,$(OBJ_DIR)%.o,$(SRCS)))
 DEPS = $(OBJS:.o=.d)
 
-all: relink $(NAME)
+all: $(NAME)
 
 -include $(DEPS)
 
-relink:
-	@if [ -f $(NAME) ] && [ $(NAME) -nt $(word 1,$(OBJS)) ]; then \
-		echo "HUH?, change something first!"; \
-		false; \
-	fi
+# relink:
+# 	@if [ -f $(NAME) ] && [ $(NAME) -nt $(word 1,$(OBJS)) ]; then \
+# 		echo "HUH?, change something first!"; \
+# 		false; \
+# 	fi
 
 $(NAME):  $(LIBFT) $(OBJS)
 	@echo "$(GREEN)\nLinking...\n$(NC)"
