@@ -25,7 +25,7 @@
 # define MLX_KEY_S 115
 # define MLX_KEY_A 97
 # define MLX_KEY_D 100
-# define KEY_ESC 53
+# define KEY_ESC 9
 # define SQUARE_SIZE 30
 # define MLX_KEY_Q 113
 # define MLX_KEY_E 101
@@ -49,6 +49,7 @@ typedef struct s_map
 	char	*s_path;
 	char	*f_color;
 	char	*c_color;
+	int		pov;
 	int		player;
 	int		max_line;
 	int		map_len;

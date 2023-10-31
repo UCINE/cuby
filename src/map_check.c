@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/27 10:08:53 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/31 20:18:23 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ int	check_charset(t_map *map, char charset, char *str)
 	return (0);
 }
 
+int	player_angle(char pov)
+{
+	if (pov == 'N')
+		return (1);
+	else if (pov == 'E')
+		return (2);
+	else if (pov == 'W')
+		return (3);
+	else if (pov == 'S')
+		return (4);
+}
+
 int	check_chars(t_map *map)
 {
 	int	i;
@@ -87,6 +99,7 @@ int	check_chars(t_map *map)
 					1);
 			else if (save == 2)
 			{
+				map->pov = player_angle(map->map[i][j]);
 				map->player_y = i;
 				map->player_x = j;
 			}

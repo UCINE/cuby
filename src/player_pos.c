@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/30 13:17:10 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/10/31 20:22:15 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,13 +114,13 @@ void ft_view(t_gameworld *world,int radius,int angle, int color)
     i = 0;
     while (i <= 60)
     {
-            ft_drawline(world,world->tile_size,angle - 30 + i ,color);
+        ft_drawline(world,world->tile_size,angle - 30 + i ,color);
         i++;
     }
 }
 int key_hendler(int key, t_gameworld *world)
 {
-    static int angle = 0;
+    int angle = world->map_info->pov;
     ft_view(world,world->tile_size, angle,0);
     if (key == key_forward)
         move_player(world, key_forward);
