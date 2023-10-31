@@ -86,10 +86,43 @@ void rotate_player(t_gameworld *world, double angle)
     printf("Player Direction: (%f, %f)\n", world->player.direction.x, world->player.direction.y);
 }
 
+void ft_drawline(t_gameworld *world,int radius,int angle, int color)
+{
+    double x;
+    double y;
 
+    x =  (double)world->map_info->player_x + 5;
+    y =  (double)world->map_info->player_y  + 5;
+      printf("oky1\n");
+    while(1)
+    {
+       
+        x+= cos(angle * M_PI/180);
+        y-= sin(angle * M_PI/180) ;
+        if(world->map_info->map[(int)y / world->tile_size][(int)x / world->tile_size] == '1')
+        {
+            break;
+        }
+       if(abs((int)x - (world->map_info->player_x + 5)) > 5 || abs((int)y - (world->map_info->player_y + 5)) > 5)
+            mlx_pixel_put(world->mlx, world->window,(int)x,(int)y, color);
+    }
+}
+void ft_view(t_gameworld *world,int radius,int angle, int color)
+{
+    int i;
+
+    i = 0;
+    while (i <= 60)
+    {
+            ft_drawline(world,world->tile_size,angle - 30 + i ,color);
+        i++;
+    }
+    
+}
 int key_hendler(int key, t_gameworld *world)
 {
-    printf("%d\n", key);
+    static int angle = 0;
+    ft_view(world,world->tile_size, angle,0);
     if (key == key_forward)
         move_player(world, key_forward);
     else if (key == key_backward)
@@ -99,11 +132,14 @@ int key_hendler(int key, t_gameworld *world)
     else if (key == key_right)
         move_player(world, key_right);
     else if (key == MLX_KEY_Q)
-        rotate_player(world, -1);
+        angle++;
+        //rotate_player(world, -1);
     else if (key == MLX_KEY_E)
-        rotate_player(world, 1);
+             angle--;
+    //rotate_player(world, 1);
     else if (key == KEY_ESC)
         exit(0);
+    ft_view(world,world->tile_size, angle,0x00ffff);
     return (0);
 }
 
