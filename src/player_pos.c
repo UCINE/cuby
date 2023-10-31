@@ -93,7 +93,7 @@ void ft_drawline(t_gameworld *world,int radius,int angle, int color)
 
     x =  (double)world->map_info->player_x + 5;
     y =  (double)world->map_info->player_y  + 5;
-      printf("oky1\n");
+      printf("ok!\n");
     while(1)
     {
        
