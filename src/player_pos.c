@@ -99,11 +99,11 @@ void ft_drawline(t_gameworld *world,int radius,int angle, int color)
        
         x+= cos(angle * M_PI/180);
         y-= sin(angle * M_PI/180) ;
-        if(world->map_info->map[(int)y / world->tile_size][(int)x / world->tile_size] == '1')
+        if (world->map_info->map[(int)y / world->tile_size][(int)x / world->tile_size] == '1')
         {
             break;
         }
-       if(abs((int)x - (world->map_info->player_x + 5)) > 5 || abs((int)y - (world->map_info->player_y + 5)) > 5)
+       if (abs((int)x - (world->map_info->player_x + 5)) > 5 || abs((int)y - (world->map_info->player_y + 5)) > 5)
             mlx_pixel_put(world->mlx, world->window,(int)x,(int)y, color);
     }
 }
@@ -117,7 +117,6 @@ void ft_view(t_gameworld *world,int radius,int angle, int color)
             ft_drawline(world,world->tile_size,angle - 30 + i ,color);
         i++;
     }
-    
 }
 int key_hendler(int key, t_gameworld *world)
 {
