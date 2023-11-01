@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
+#    By: akhi <akhi@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/10/27 00:13:39 by ojamal           ###   ########.fr        #
+#    Updated: 2023/11/01 16:51:39 by akhi             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ_DIR = ./obj/
 
 UNAME_S := $(shell uname -s)
 ifeq ($(UNAME_S),Linux)
-    LINK_FLAGS = -L $(LIBFT_DIR) -lft -L../minilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
+    LINK_FLAGS = -L $(LIBFT_DIR) -lft -L./minilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
 endif
 ifeq ($(UNAME_S),Darwin)
     LINK_FLAGS = -L $(LIBFT_DIR) -lft -lmlx -framework OpenGL -framework AppKit
