@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/31 20:18:23 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/02 00:17:39 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,30 @@
 int	check_for_textures(t_map *map)
 {
 	if (!map->n_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid north texture",
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
 				2), 1);
 	if (!map->e_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid east texture",
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
 				2), 1);
 	if (!map->s_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid south texture",
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
 				2), 1);
 	if (!map->w_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid west texture",
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
 				2), 1);
-	if (check_path(map->n_path) || check_path(map->s_path)
-		|| check_path(map->w_path) || check_path(map->e_path))
-		return (1);
 	return (0);
 }
 
 int	check_for_colors(t_map *map)
 {
 	if (!map->f_color)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid floor color", 2),
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid color", 2),
 			1);
 	if (!map->c_color)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid celling color",
+		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid color",
 				2), 1);
-	if (check_colors(map->f_color) || check_colors(map->c_color))
+	if (check_colors(map->f_color, &map->floor)
+		|| check_colors(map->c_color, &map->celling))
 		return (1);
 	return (0);
 }
@@ -77,6 +75,7 @@ int	player_angle(char pov)
 		return (3);
 	else if (pov == 'S')
 		return (4);
+	return (0);
 }
 
 int	check_chars(t_map *map)

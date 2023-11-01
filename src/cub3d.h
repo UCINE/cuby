@@ -27,8 +27,8 @@
 # define MLX_KEY_D 100
 # define KEY_ESC 9
 # define SQUARE_SIZE 30
-# define MLX_KEY_Q 113
-# define MLX_KEY_E 101
+# define MLX_KEY_Q 101
+# define MLX_KEY_E 104
 
 typedef enum e_keys {
     key_forward = MLX_KEY_W,
@@ -36,6 +36,14 @@ typedef enum e_keys {
     key_left = MLX_KEY_A,
     key_right = MLX_KEY_D,
 }   t_keys;
+
+typedef struct s_color
+{
+	int		flag;
+	int		r;
+	int		g;
+	int		b;
+}	t_color;
 
 typedef struct s_map
 {
@@ -55,7 +63,10 @@ typedef struct s_map
 	int		map_len;
 	int		player_x;
 	int		player_y;
+	t_color	floor;
+	t_color	celling;
 }	t_map;
+
 
 
 typedef struct s_point2D
@@ -96,12 +107,12 @@ typedef struct s_gameworld
 
 int 	is_walkable_tile(t_gameworld *world, int x, int y);
 void	map_fill(char **str, t_map *map);
+int		check_for_textures(t_map *map);
 int		map_check(t_map *map);
 void	map_printing(t_map *map);
 void	get_map(char **str, t_map *map);
 void	free_str(char **str);
-int 	check_path(char *str);
-int 	check_colors(char *color);
+int 	check_colors(char *color, t_color *rgb);
 int 	calculatetilesize(char **map);
 int 	key_hendler(int key, t_gameworld *world);
 void	draw_square(t_gameworld *world, int x_start, int y_start, int size, int color);

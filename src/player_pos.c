@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:34:19 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/31 20:22:15 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/02 00:04:01 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,12 @@ void ft_drawline(t_gameworld *world,int radius,int angle, int color)
 {
     double x;
     double y;
+    (void)radius;
 
     x =  (double)world->map_info->player_x + 5;
     y =  (double)world->map_info->player_y  + 5;
-      printf("ok!\n");
     while(1)
     {
-       
         x+= cos(angle * M_PI/180);
         y-= sin(angle * M_PI/180) ;
         if (world->map_info->map[(int)y / world->tile_size][(int)x / world->tile_size] == '1')
@@ -112,6 +111,7 @@ void ft_view(t_gameworld *world,int radius,int angle, int color)
     int i;
 
     i = 0;
+    (void)radius;
     while (i <= 60)
     {
         ft_drawline(world,world->tile_size,angle - 30 + i ,color);
@@ -134,7 +134,7 @@ int key_hendler(int key, t_gameworld *world)
         angle++;
         //rotate_player(world, -1);
     else if (key == MLX_KEY_E)
-             angle--;
+        angle--;
     //rotate_player(world, 1);
     else if (key == KEY_ESC)
         exit(0);
