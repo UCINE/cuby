@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/05 01:47:27 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/05 03:41:49 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define ROTATION_SPEED DEG_TO_RAD(5.0)
 # define M_PI 3.14159265358979323846
 # define player_size 10
-// # define SCREEN_WIDTH 1152
-// # define SCREEN_HEIGHT 512
+# define SCREEN_WIDTH 1152
+# define SCREEN_HEIGHT 512
 # define PLAYER_SPEED 0.1
 # define MLX_KEY_W 119
 # define MLX_KEY_S 115
@@ -65,6 +65,7 @@ typedef struct	s_data
 	int		line_length;
 	int		endian;
 }				t_data;
+
 typedef struct s_map
 {
 	char	*line;
