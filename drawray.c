@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   drawray.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/10/28 03:15:26 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/05 02:40:37 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+//#include "cub3d.h"
 
 // int isWall(int x, int y, t_gameworld *world)
 // {

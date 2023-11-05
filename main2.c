@@ -198,8 +198,8 @@ int main(int ac, char **av)
 	// mlx_put_image_to_window(world.mlx, world.window, world.mlximage, 0, 0);
 	world.player.direction.x = 1.0;
 	world.player.direction.y = 0.0;
-	world.map_info->player_x *= world.tile_size;
-	world.map_info->player_y *= world.tile_size;
+	world.map_info->player_x = world.map_info->player_x * world.tile_size + world.tile_size / 2;
+	world.map_info->player_y = world.map_info->player_y * world.tile_size + world.tile_size / 2;
 	mlx_hook(world.window, 17, 0, (void *)exit, &world);
 	mlx_hook(world.window, 2, 1L<<0, key_hendler, &world);
 	mlx_loop(world.mlx);
