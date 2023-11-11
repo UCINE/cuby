@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/05 03:41:49 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/06 00:29:56 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include "../get_next_line/get_next_line.h"
 
 
+#define WIN_HIGHT 1000
+#define WIN_WIDTH 1000
 // # define ESC 53
 // # define W 13
 // # define A 0
@@ -113,6 +115,9 @@ typedef struct s_gameworld
 	double			is_ray_facing_down;
 	double			is_ray_facing_left;
 	double			is_ray_facing_right;
+	double			wall_height;
+	double			wall_hitx;
+	double			wall_hity;
 	// char			**map;		
     // t_character		player;
 	// void			*mlx;

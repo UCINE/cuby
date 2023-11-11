@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/05 02:46:07 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/06 00:45:25 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	get_dir(t_gameworld *data)
 	    data->dir = M_PI / 2;
 	else
 	    data->dir = 0;
-	// data->x_pos = data->player_x * 40 + 20;
-	// data->y_pos = data->player_y * 40 + 20;
-    data->speed = 10;
+    data->speed = 15;
 }
 
 void	draw_hight(t_gameworld *data)
@@ -143,28 +141,6 @@ void	draw_elements(t_gameworld *data)
     data->imageToDraw.img, 0, 0);
 }
 
-// void    get_pos(t_gameworld *world)
-// {
-//     int i = 0;
-//     while (world->map_info->map[i])
-//     {
-//         int j = 0;
-//         while (world->map_info->map[i][j])
-//         {
-//             if (world->map_info->map[i][j] == 'W'
-//                 || world->map_info->map[i][j] == 'N' || world->map_info->map[i][j] == 'E'
-//                 || world->map_info->map[i][j] == 'S')
-//             {
-//                 world->player_y = (float)i;
-//                 world->player_x = (float)j;
-//                 return ;
-//             }
-//             j++;
-//         }
-//         i++;
-//     }
-// }
-
 void    raycast(t_gameworld *world)
 {
     map_size(world);
@@ -175,13 +151,14 @@ void    raycast(t_gameworld *world)
     printf("%c == %f\n", world->map_info->pov, world->dir);
     printf("Map Demon-> h: %d ==> w: %d\n", world->h, world->w);
     world->connection = mlx_init();
-    world->win = mlx_new_window(world->connection, world->w * 40,
-         world->h * 40, "cub3D");
+    // world->win = mlx_new_window(world->connection, world->w * 40,
+    //      world->h * 40, "cub3D");
+	world->win = mlx_new_window(world->connection, WIN_WIDTH,
+		WIN_HIGHT, "cub3D");
     for (int i = 0; i < world->h; i++)
     {
         printf("[%s]\n", world->map_info->map[i]);
     }
-    //draw_elements(world);
     mlx_hook(world->win, 2, 1L<<0, ft_moves, world);
     mlx_loop(world->connection);
 }
