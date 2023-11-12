@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/02 00:17:39 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/12 12:02:32 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,25 @@
 int	check_for_textures(t_map *map)
 {
 	if (!map->n_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
-				2), 1);
+		return msg_er("Invalid texture");
 	if (!map->e_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
-				2), 1);
+		return msg_er("Invalid texture");
 	if (!map->s_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
-				2), 1);
+		return msg_er("Invalid texture");
 	if (!map->w_path)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid texture",
-				2), 1);
+		return msg_er("Invalid texture");
 	return (0);
 }
 
 int	check_for_colors(t_map *map)
 {
 	if (!map->f_color)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid color", 2),
-			1);
+		return msg_er("Invalid color");
 	if (!map->c_color)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid color",
-				2), 1);
-	if (check_colors(map->f_color, &map->floor)
+		return msg_er("Invalid color");
+	if ((check_colors(map->f_color, &map->floor)
 		|| check_colors(map->c_color, &map->celling))
+			&& check_for_textures(map))
 		return (1);
 	return (0);
 }
@@ -94,8 +89,7 @@ int	check_chars(t_map *map)
 		{
 			save = check_charset(map, map->map[i][j], "01NSEW \t");
 			if (!save)
-				return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid charset", 2),
-					1);
+				return msg_er("Invalid charset");
 			else if (save == 2)
 			{
 				map->pov = player_angle(map->map[i][j]);
@@ -107,7 +101,7 @@ int	check_chars(t_map *map)
 		i++;
 	}
 	if (map->player != 1)
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mInvalid player", 2), 1);
+		return msg_er("Invalid player");
 	return (0);
 }
 
@@ -117,11 +111,11 @@ int	check_ups(t_map *map, int i, int j)
 
 	k = i - 1;
 	if (k > 0 && map->map_clone[k][j] != '1' && map->map_clone[k][j] != 'x')
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mUnclosed wall", 2), 1);
+		return msg_er("Unclosed Wall");
 	k = i + 1;
 	if (k < map->map_len && map->map_clone[k][j] != '1' && map->map_clone[k][j] != 'x'
 		&& map->map_clone[k][j] != '0')
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mUnclosed wall", 2), 1);
+		return msg_er("Unclosed Wall");
 	return (0);
 }
 
@@ -131,11 +125,11 @@ int	check_sides(t_map *map, int j, int i)
 
 	k = j - 1;
 	if (k > 0 && map->map_clone[i][k] != '1' && map->map_clone[i][k] != 'x')	
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mUnclosed wall", 2), 1);
+		return msg_er("Unclosed Wall");
 	k = j + 1;
 	if (k > 0 && k < map->max_line && map->map_clone[i][k] != '1' && map->map_clone[i][k] != 'x'
 		&& map->map_clone[i][k] != '0')
-		return (ft_putendl_fd("\033[1;31mError\nCub3D: \033[0mUnclosed wall", 2), 1);
+		return msg_er("Unclosed Wall");
 	return (0);
 }
 
@@ -146,7 +140,7 @@ int	map_check(t_map *map)
 
 	i = 0;
 	j = 0;
-	if (check_for_textures(map) || check_for_colors(map) || check_chars(map))
+	if (check_for_colors(map) || check_chars(map))
 		return (1);
 	while(map->map_clone[i])
 	{

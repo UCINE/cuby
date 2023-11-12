@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/06 00:29:56 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:53:40 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,11 +131,11 @@ typedef struct s_gameworld
 
 //int 	is_walkable_tile(t_gameworld *world, int x, int y);
 void	map_fill(char **str, t_map *map);
+int		msg_er(char *str);
 int		check_for_textures(t_map *map);
 int		map_check(t_map *map);
 void	map_printing(t_map *map);
 void	get_map(char **str, t_map *map);
-void	free_str(char **str);
 int 	check_colors(char *color, t_color *rgb);
 void    raycast(t_gameworld *world);
 int		ft_moves(int key, t_gameworld *data);

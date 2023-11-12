@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_raycast.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:15:42 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/04 22:02:18 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/12 11:55:25 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,10 @@ int	check_filename(char *str)
 			if (!ft_strcmp(&str[i], ".cub"))
 				return (0);
 			else
-			{
-				ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid map name\n",
-					2);
-				return (1);
-			}
+				return msg_er("Invalid map name");
 		}
 		else if (!str[i + 1])
-			return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid map name\n",
-				2), 1);
+			return msg_er("Invalid map name");
 		i++;
 	}
 	return (0);
@@ -42,7 +37,7 @@ t_map	*read_map(int fd, t_map *map)
 {
 	if (fd == -1)
 	{
-		ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Invalid file", 2);
+		ft_putstr_fd("\033[1;31mError\nCube3D:\033[0;0m Invalid file", 2);
 		return (NULL);
 	}
 	map->get_line = NULL;
@@ -50,7 +45,7 @@ t_map	*read_map(int fd, t_map *map)
 	map->get_line = get_next_line(fd);
 	if (!map->get_line)
 	{
-		ft_putendl_fd("\033[1;31mCube3D:\033[0;0m Invalid file", 2);
+		ft_putendl_fd("\033[1;31mError\nCube3D:\033[0;0m Invalid file", 2);
 		return (NULL);
 	}
 	while (map->get_line)
@@ -63,18 +58,6 @@ t_map	*read_map(int fd, t_map *map)
 	map->map = ft_split(map->line, '\n');
 	free(map->line);
 	return (map);
-}
-
-void	free_map(t_map **map)
-{
-	free((*map)->n_path);
-	free((*map)->e_path);
-	free((*map)->w_path);
-	free((*map)->s_path);
-	free((*map)->f_color);
-	free((*map)->c_color);
-	free_str((*map)->map_clone);
-	free(*map);
 }
 
 void	map_init(t_map *map)
@@ -98,10 +81,10 @@ t_map *process_map(char *filename)
         return (NULL);
 	else
 	{
-        map = malloc(sizeof(t_map));
+        map = my_malloc(sizeof(t_map));
         if (!map)  
 		{
-            ft_putstr_fd("\033[1;31mCube3D:\033[0;0m Memory allocation error\n", 2);
+            ft_putstr_fd("\033[1;31mError\nCube3D:\033[0;0m Memory allocation error\n", 2);
             return (NULL);
         }
         map = read_map(open(filename, O_RDONLY, 0666), map);
@@ -125,10 +108,11 @@ int main(int ac, char **av)
 	t_gameworld world;
 
 	if (ac != 2)
-		return (ft_putstr_fd("\033[1;31mCube3D:\033[0;0m ./cub3d <map_path>\n", 2), 1);
+		return msg_er("./cub3d <map_path>");
 	world.map_info = process_map(av[1]);
 	if (!world.map_info)
         return (printf("Stopped Here"));
-    printf("%c\n", world.map_info->pov);
+	// map_printing(world.map_info);
+    printf("%d\n", world.map_info->pov);
     raycast(&world);
 }
