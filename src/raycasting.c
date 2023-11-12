@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/06 00:46:36 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:42:37 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ int	ft_moves(int key, t_gameworld *data)
     printf("%d\n", key);
 	if (key == 65293 && data->checkEnter == 0)
 		data->checkEnter = 1;
+	if (key == 65307)
+		exit(0);
 	if (data->checkEnter == 1)
 	{
 		if (key != 119 && key != 115 && key != 65363 && key != 65361 && key != 65293)
