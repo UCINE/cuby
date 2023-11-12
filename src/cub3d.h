@@ -118,6 +118,7 @@ typedef struct s_gameworld
 	double			wall_height;
 	double			wall_hitx;
 	double			wall_hity;
+	bool			checkEnter;
 	// char			**map;		
     // t_character		player;
 	// void			*mlx;

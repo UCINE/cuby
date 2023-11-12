@@ -77,6 +77,7 @@ void	get_start_end(t_gameworld *data)
 	// if (data->end >= data->h * 40)
 	// 	data->end = data->h * 40 - 1;
 }
+
 void	draw(t_gameworld *data, int j, int color)
 {
 	int i;
@@ -100,9 +101,11 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
 {
     double	i = -0.5;
 	int		j = 1999;
+	int 	hit_vert = 0; 
+	int 	hit_horz = 0;
+
     while (i <= 0.5)
     {
-		int hit_vert = 0, hit_horz = 0;
         data->distance = 0;
         double y = ray_y;
         double x = ray_x;
@@ -138,54 +141,59 @@ int	ft_moves(int key, t_gameworld *data)
 	int	y;
 	int	x;
     printf("%d\n", key);
-	if (key != 119 && key != 115 && key != 65363 && key != 65361)
-		return (0);
-	realloc_image(data);
-	if (key == 115)
+	if (key == 65293 && data->checkEnter == 0)
+		data->checkEnter = 1;
+	if (data->checkEnter == 1)
 	{
-        printf("Right\n");
-		y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
-		x = data->map_info->player_x;
-		if (data->map_info->map[y / 40][x / 40] != '1')
-			data->map_info->player_y -= sin(data->dir- M_PI/2) * data->speed;
-		x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
-		y = data->map_info->player_y;
-		if (data->map_info->map[y / 40][x / 40] != '1')
-			data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
+		if (key != 119 && key != 115 && key != 65363 && key != 65361 && key != 65293)
+			return (0);
+		realloc_image(data);
+		if (key == 115)
+		{
+    	    printf("Right\n");
+			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
+			x = data->map_info->player_x;
+			if (data->map_info->map[y / 40][x / 40] != '1')
+				data->map_info->player_y -= sin(data->dir- M_PI/2) * data->speed;
+			x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
+			y = data->map_info->player_y;
+			if (data->map_info->map[y / 40][x / 40] != '1')
+				data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
+		}
+		else if (key == 119)
+		{
+    	    printf("Left\n");
+			y = data->map_info->player_y - sin(data->dir+ M_PI/2) * data->speed;
+			x = data->map_info->player_x;
+			if (data->map_info->map[y / 40][x / 40] != '1')
+				data->map_info->player_y -= sin(data->dir+ M_PI/2) * data->speed;
+			x = data->map_info->player_x + cos(data->dir+ M_PI/2) * data->speed;
+			y = data->map_info->player_y;
+			if (data->map_info->map[y / 40][x / 40] != '1')
+				data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
+		}
+		else if (key == 65361)
+    	{
+			data->dir+= 0.1;
+    	    printf("Dawr limn\n");
+    	}
+		else if (key == 65363)
+    	{
+			data->dir -= 0.1;
+    	    printf("Dawr Lisr\n");
+    	}
+		//draw_elements(data);
+		printf("y: %d ==== x: %d\n", data->map_info->player_y, data->map_info->player_x);
+		// x = 0;
+		// while (x < 4)
+		// {
+		// 	circleBres(data, x);
+		// 	x++;
+		// }
+		ray_create(data, data->map_info->player_y, data->map_info->player_x);
+		mlx_put_image_to_window(data->connection, data->win,
+    	data->imageToDraw.img, 0, 0);
+		mlx_destroy_image(data->connection, data->imageToDraw.img);
 	}
-	else if (key == 119)
-	{
-        printf("Left\n");
-		y = data->map_info->player_y - sin(data->dir+ M_PI/2) * data->speed;
-		x = data->map_info->player_x;
-		if (data->map_info->map[y / 40][x / 40] != '1')
-			data->map_info->player_y -= sin(data->dir+ M_PI/2) * data->speed;
-		x = data->map_info->player_x + cos(data->dir+ M_PI/2) * data->speed;
-		y = data->map_info->player_y;
-		if (data->map_info->map[y / 40][x / 40] != '1')
-			data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
-	}
-	else if (key == 65361)
-    {
-		data->dir+= 0.1;
-        printf("Dawr limn\n");
-    }
-	else if (key == 65363)
-    {
-		data->dir -= 0.1;
-        printf("Dawr Lisr\n");
-    }
-	//draw_elements(data);
-	printf("y: %d ==== x: %d\n", data->map_info->player_y, data->map_info->player_x);
-	// x = 0;
-	// while (x < 4)
-	// {
-	// 	circleBres(data, x);
-	// 	x++;
-	// }
-	ray_create(data, data->map_info->player_y, data->map_info->player_x);
-	mlx_put_image_to_window(data->connection, data->win,
-    data->imageToDraw.img, 0, 0);
-	mlx_destroy_image(data->connection, data->imageToDraw.img);
 	return (0);
 }

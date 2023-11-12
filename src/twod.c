@@ -123,8 +123,8 @@ void	draw_elements(t_gameworld *data)
 {
 	int	i;
 	int	j;
-	draw_hight(data);
-	draw_width(data);
+	// draw_hight(data);
+	// draw_width(data);
 
 	i = 0;
 	while (data->map_info->map[i])
@@ -141,8 +141,23 @@ void	draw_elements(t_gameworld *data)
     data->imageToDraw.img, 0, 0);
 }
 
+void	welcomer(t_gameworld *world)
+{
+	//unsigned long i = 0;
+	mlx_string_put(world->connection, world->win, 475, 475, 0xF509FF, "Welcome To The Game...");
+	mlx_string_put(world->connection, world->win, 475, 510, 0xF509FF, "Press Enter To Start");
+	// while (i < 56746745675)
+	// {
+	// 	mlx_string_put(world->connection, world->win, , 475, 0xF509FF, "Welcome To The Game");
+	// }
+	// mlx_string_put(world->connection, world->win, 475, 475, 0xF509FF, "Welcome To The Game");
+	// mlx_string_put(world->connection, world->win, 475, 475, 0xF509FF, "Welcome To The Game");
+	// mlx_string_put(world->connection, world->win, 475, 475, 0xF509FF, "Welcome To The Game");
+
+}
 void    raycast(t_gameworld *world)
 {
+	world->checkEnter = 0;
     map_size(world);
     get_dir(world);
     //get_pos(world);
@@ -155,6 +170,7 @@ void    raycast(t_gameworld *world)
     //      world->h * 40, "cub3D");
 	world->win = mlx_new_window(world->connection, WIN_WIDTH,
 		WIN_HIGHT, "cub3D");
+	welcomer(world);
     for (int i = 0; i < world->h; i++)
     {
         printf("[%s]\n", world->map_info->map[i]);
