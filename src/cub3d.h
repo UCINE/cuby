@@ -44,6 +44,19 @@
 # define MLX_KEY_Q 113
 # define MLX_KEY_E 101
 
+typedef struct s_image
+{
+    void *img;
+    char *addr;
+    int bits_per_pixel;
+    int line_length;
+    int endian;
+    int h;
+    int w;
+    double x;
+    double y;
+} t_image;
+
 typedef enum e_keys {
     key_forward = MLX_KEY_W,
     key_backward = MLX_KEY_S,
@@ -119,6 +132,7 @@ typedef struct s_gameworld
 	double			wall_hitx;
 	double			wall_hity;
 	bool			checkEnter;
+	t_image			image;
 	// char			**map;		
     // t_character		player;
 	// void			*mlx;

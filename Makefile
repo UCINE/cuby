@@ -1,4 +1,5 @@
 CC = cc
+
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 NAME = cub3D
