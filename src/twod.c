@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   twod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/06 00:45:25 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:41:36 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,5 +176,6 @@ void    raycast(t_gameworld *world)
         printf("[%s]\n", world->map_info->map[i]);
     }
     mlx_hook(world->win, 2, 1L<<0, ft_moves, world);
+	mlx_hook(world->win, 17, 1L<<17, (void *)exit, world);
     mlx_loop(world->connection);
 }

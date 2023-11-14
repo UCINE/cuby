@@ -6,11 +6,17 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:36:24 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/13 07:27:21 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/12 17:00:21 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	msg_er(char *msg)
+{
+	printf("\033[1;31mError:\nCub3D:\033[0;0m %s\n", msg);
+	return (1);
+}
 
 void	map_printing(t_map *map)
 {
@@ -70,7 +76,7 @@ void	fill_x(int *i, int *k, t_map *map, char **str)
 
 	while ((*i) < map->map_len)
 	{
-		map->map_clone[(*i) + 1] = malloc(sizeof(char) * (map->max_line + 3));
+		map->map_clone[(*i) + 1] = my_malloc(sizeof(char) * (map->max_line + 3));
 		map->map_clone[(*i) + 1][0] = 'x';
 		j = 0;
 		(*k) = 1;
@@ -112,8 +118,8 @@ void	get_map(char **str, t_map *map)
 	k = 0;
 	map->max_line = find_biggest_line(str);
 	map->map_len = map_len(str);
-	map->map_clone = (char **)malloc(sizeof(char *) * (map->map_len + 3));
-	map->map_clone[0] = (char *)malloc(sizeof(char) * (map->max_line + 3));
+	map->map_clone = (char **)my_malloc(sizeof(char *) * (map->map_len + 3));
+	map->map_clone[0] = (char *)my_malloc(sizeof(char) * (map->max_line + 3));
 	while (k <= map->max_line + 1)
 	{
 		map->map_clone[0][k] = 'x';
@@ -121,7 +127,7 @@ void	get_map(char **str, t_map *map)
 	}
 	map->map_clone[0][k] = '\0';
 	fill_x(&i, &k, map, str);
-	map->map_clone[i + 1] = (char *)malloc(sizeof(char) * (map->max_line + 3));
+	map->map_clone[i + 1] = (char *)my_malloc(sizeof(char) * (map->max_line + 3));
 	k = 0;
 	while (k <= map->max_line + 1)
 	{

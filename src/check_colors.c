@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_colors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:43:17 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/02 00:01:56 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/12 11:54:52 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ int	valid_color(char *color, int *i, int *j, t_color *rgb)
 		val = 0;
 	}
 	else
-		return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n", 2)
-			, 1);
+		return msg_er("Invalid color");
 	return (0);
 }
 
@@ -62,9 +61,11 @@ int check_colors(char *color, t_color *rgb)
 				return (1);
 		}
 		if (j > 3)
-			return (ft_putstr_fd("\033[1;31mCube3D :\033[0;0m Invalid celling color\n", 2), 1);
+			return msg_er("Invalid color");
 		else if (color[i] == ',')
 			j = 0;
+		else if (color[i] == '\0')
+			break;
 		i++;
 	}
 	return (0);

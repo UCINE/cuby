@@ -1,17 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/17 10:29:42 by lahamoun          #+#    #+#              #
-#    Updated: 2023/11/06 00:34:57 by lahamoun         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 CC = cc
-#CFLAGS = -Wall -Wextra -Werror -g3
+
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 NAME = cub3D
 LIBFT = libft.a
