@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   twod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/12 16:41:36 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/16 03:21:50 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,20 @@ void	draw_elements(t_gameworld *data)
 	mlx_put_image_to_window(data->connection, data->win,
     data->imageToDraw.img, 0, 0);
 }
-
+void texture_init (t_gameworld *game, t_image *texture, char* path)
+{
+        texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
+        if (!texture->img)
+        {
+            ft_putstr_fd("error: texture '", 2);
+            ft_putstr_fd(path, 2);
+            ft_putstr_fd("' not found.\n", 2);
+            exit (0);
+        }
+        texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel), &(texture->line_length), &(texture->endian));
+        texture->x = 0;
+        texture->y = 0;
+}
 void	welcomer(t_gameworld *world)
 {
 	//unsigned long i = 0;
@@ -155,6 +168,15 @@ void	welcomer(t_gameworld *world)
 	// mlx_string_put(world->connection, world->win, 475, 475, 0xF509FF, "Welcome To The Game");
 
 }
+
+void image_init(t_gameworld *game)
+{
+	texture_init(game, &(game->t[NORTH]), "./texture/north_texture.xpm");
+	texture_init(game, &(game->t[SOUTH]), "./texture/south_texture.xpm");
+	texture_init(game, &(game->t[EAST]), "./texture/east_texture.xpm");
+	texture_init(game, &(game->t[WEST]), "./texture/west_texture.xpm");
+}
+
 void    raycast(t_gameworld *world)
 {
 	world->checkEnter = 0;
@@ -168,6 +190,7 @@ void    raycast(t_gameworld *world)
     world->connection = mlx_init();
     // world->win = mlx_new_window(world->connection, world->w * 40,
     //      world->h * 40, "cub3D");
+	image_init(world);
 	world->win = mlx_new_window(world->connection, WIN_WIDTH,
 		WIN_HIGHT, "cub3D");
 	welcomer(world);

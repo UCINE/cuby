@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/12 16:41:20 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/16 03:09:16 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 // # define A 0
 // # define S 1
 // # define D 2
-# define DEG_TO_RAD(degrees) ((degrees) * M_PI / 180.0)
-# define ROTATION_SPEED DEG_TO_RAD(5.0)
+//# define DEG_TO_RAD(degrees) ((degrees) * M_PI / 180.0)
+//# define ROTATION_SPEED DEG_TO_RAD(5.0)
 # define M_PI 3.14159265358979323846
 # define player_size 10
 # define SCREEN_WIDTH 1152
@@ -43,6 +43,10 @@
 # define SQUARE_SIZE 30
 # define MLX_KEY_Q 113
 # define MLX_KEY_E 101
+#define NORTH 0
+#define SOUTH 1
+#define WEST 3
+#define EAST 2
 
 typedef struct s_image
 {
@@ -133,6 +137,8 @@ typedef struct s_gameworld
 	double			wall_hity;
 	bool			checkEnter;
 	t_image			image;
+	t_image t[5];
+	int orientation;
 	// char			**map;		
     // t_character		player;
 	// void			*mlx;

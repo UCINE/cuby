@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/14 04:09:17 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/16 03:20:12 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,55 +90,81 @@ int get_texture_color(t_image *texture, int x, int y)
     return (color);
 }
 
-void	draw(t_gameworld *data, int j, int color, t_image *t, int hit_horz, int hit_vert)
+void	draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
 {
 	int i;
 	double l;
+	double m;
+	int a = 0;
 
 	i = data->start;
 	int k = 0;
+	if (data->orientation == NORTH)
+		a = NORTH;
+	if (data->orientation == SOUTH)
+		a = SOUTH;
+	if (data->orientation == EAST)
+		a = EAST;
+	if (data->orientation == WEST)
+		a = WEST;
 	if (hit_vert)
-        	t->x = (int)data->wall_hity % (int)t->w;
+        	data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
     else if (hit_horz)
-        	t->x = (int)data->wall_hitx % (int)t->w;
-	if (t->x >= t->w)
-				t->x -= t->w;
+        	data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
+	if (data->t[a].x >= data->t[a].w)
+				data->t[a].x -= data->t[a].w;
+	data->t[a].y = 0;
+	
 	while (k < data->start)
 	{
 		my_mlx_pixel_put(data, j, k, 0x85C1E9);
 		k++;
 	}
-	t->y = 0;
+	data->t[a].y = 0;
 	while (i < data->end)
 	{
-		l = (double)t->h / data->wall_height;
-		color = get_texture_color(t, (int)t->x, (int)t->y);
+		l = (double)data->t[a].h / data->wall_height;
+		m = data->t[a].y;
+		if (data->wall_height > WIN_HIGHT)
+        	data->t[a].y += l * (data->wall_height - WIN_HIGHT) / 2;
+		color = get_texture_color(&(data->t[a]), (int)data->t[a].x, (int)data->t[a].y);
+		data->t[a].y = m;
 		my_mlx_pixel_put(data, j, i, color);
 		i++;
 		k++;
-		t->y += l;
+		data->t[a].y += l;
 		//printf("x = %f, y = %f\n", t->x, t->y);
 	}
 }
 
-void texture_init (t_gameworld *game, t_image *texture, char* path)
+double ft_distance (double px, double py, double wx, double wy)
 {
-        texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
-        if (!texture->img)
-        {
-            ft_putstr_fd("error: texture '", 2);
-            ft_putstr_fd(path, 2);
-            ft_putstr_fd("' not found.\n", 2);
-            exit (0);
-        }
-        texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel), &(texture->line_length), &(texture->endian));
-        texture->x = 0;
-        texture->y = 0;
+	double dx;
+	double dy;
+
+	dx = wx - wx;
+	dy = py - wy;
+	return (sqrt(dx * dx + dy * dy));
+}
+
+
+
+int ft_orientation(int hit_vert, int hit_horz, double i, t_gameworld *data)
+{
+	double rayangle = data->dir + i;
+	if (hit_horz && cos(rayangle) < 0)
+		return(WEST);
+	if (hit_horz && cos(rayangle) > 0)
+		return(EAST);
+	if (hit_vert && sin(rayangle) < 0)
+		return(SOUTH);
+	if (hit_vert && sin(rayangle) > 0)
+		return(NORTH);
 }
 
 void ray_create(t_gameworld *data, double ray_y, double ray_x)
 {
-    double	i = -0.5;
+    double	i = -M_PI / 6;
 	int		j = WIN_WIDTH;
 	double increment;
 	int		hit_vert;
@@ -149,7 +175,7 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
 
 	texture_init(data, &t, "./src/texture.xpm");
 	increment = (M_PI / 3) / j;
-    while (i <= 0.5)
+    while (i <= M_PI / 6)
     {
         data->distance = 0;
         double y = ray_y;
@@ -169,14 +195,17 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
             y -= dy;
             data->distance++;
         }
+		//data->distance = distance(ray_x, ray_y, x, y);
 		double angleDifference = fabs(data->dir - (data->dir + i)); 
-    	// if (angleDifference < M_PI / 2)
-        // 	data->distance = data->distance * cos(angleDifference);
-    	// else
-        // 	data->distance = data->distance * cos(M_PI - angleDifference);
+    	if (angleDifference < M_PI / 2)
+        	data->distance = data->distance * cos(angleDifference);
+    	else
+        	data->distance = data->distance * cos(M_PI - angleDifference);
+		data->orientation = ft_orientation(hit_vert, hit_horz, i, data);
 		data->wall_hitx = x;
 		data->wall_hity = y;
 		data->wall_height = wall_hight(data);
+		//data->wall_height = (int)((40 * WIN_HIGHT) / data->distance);
 		get_start_end(data);
 		//k = (double)t.h / data->wall_height;
 
@@ -191,10 +220,10 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
 		//else if (hit_vert)
 		//	draw(data, j, 0xFF00FF);
 		//else
-		draw(data, j, 0xFF00FF, &t, hit_horz, hit_vert);
+		draw(data, j, 0xFF00FF, hit_horz, hit_vert);
 		//t.y += k;
 		j--;
-        i += 0.001;
+        i += increment;
     }
 }
 int	ft_moves(int key, t_gameworld *data)
@@ -202,16 +231,16 @@ int	ft_moves(int key, t_gameworld *data)
 	int	y;
 	int	x;
     printf("%d\n", key);
-	if (key == 65293 && data->checkEnter == 0)
+	if (key == 36 && data->checkEnter == 0)
 		data->checkEnter = 1;
 	if (key == 65307)
 		exit(0);
 	if (data->checkEnter == 1)
 	{
-		if (key != 119 && key != 115 && key != 65363 && key != 65361 && key != 65293)
+		if (key != 1 && key != 13 && key != 123 && key != 124 && key != 36)
 			return (0);
 		realloc_image(data);
-		if (key == 115)
+		if (key == 13)
 		{
     	    printf("Right\n");
 			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
@@ -223,7 +252,7 @@ int	ft_moves(int key, t_gameworld *data)
 			if (data->map_info->map[y / 40][x / 40] != '1')
 				data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
 		}
-		else if (key == 119)
+		else if (key == 1)
 		{
     	    printf("Left\n");
 			y = data->map_info->player_y - sin(data->dir+ M_PI/2) * data->speed;
@@ -235,12 +264,12 @@ int	ft_moves(int key, t_gameworld *data)
 			if (data->map_info->map[y / 40][x / 40] != '1')
 				data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
 		}
-		else if (key == 65361)
+		else if (key == 124)
     	{
 			data->dir+= 0.1;
     	    printf("Dawr limn\n");
     	}
-		else if (key == 65363)
+		else if (key == 123)
     	{
 			data->dir -= 0.1;
     	    printf("Dawr Lisr\n");
