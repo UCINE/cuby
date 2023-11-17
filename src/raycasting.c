@@ -6,7 +6,7 @@
 /*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/16 03:20:12 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/17 22:35:50 by lahamoun         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
 		//data->wall_height = (int)((40 * WIN_HIGHT) / data->distance);
 		get_start_end(data);
 		//k = (double)t.h / data->wall_height;
-
 		// if (hit_vert)
         // 	t.x = (int)data->wall_hitx % (int)t.w;
     	// else if (hit_horz)
