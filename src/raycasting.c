@@ -242,9 +242,11 @@ int	ft_moves(int key, t_gameworld *data)
 		if (key == 13)
 		{
     	    printf("Right\n");
+			// - sin(data->dir - M_PI/2) = cos(data->dir)
 			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
 			x = data->map_info->player_x;
 			if (data->map_info->map[y / 40][x / 40] != '1')
+			//cos(data->dir- M_PI/2) = sin(data->dir)
 				data->map_info->player_y -= sin(data->dir- M_PI/2) * data->speed;
 			x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
 			y = data->map_info->player_y;
