@@ -34,26 +34,26 @@ void	get_dir(t_gameworld *data)
     data->speed = 15;
 }
 
-void	draw_hight(t_gameworld *data)
-{
-	int	i;
-	int	j;
-	int	fourty;
+// void	draw_hight(t_gameworld *data)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	fourty;
 
-	i = 0;
-	fourty = 40;
-	while(i < data->h - 1)
-	{
-		j = 0;
-		while (j < data->w * 40)
-		{
-			my_mlx_pixel_put(data, j, fourty, 0x00FF00);
-			j++;
-		}
-		fourty+=40;
-		i++;
-	}
-}
+// 	i = 0;
+// 	fourty = 40;
+// 	while(i < data->h - 1)
+// 	{
+// 		j = 0;
+// 		while (j < data->w * 40)
+// 		{
+// 			my_mlx_pixel_put(data, j, fourty, 0x00FF00);
+// 			j++;
+// 		}
+// 		fourty+=40;
+// 		i++;
+// 	}
+// }
 
 void	draw_width(t_gameworld *data)
 {
@@ -145,10 +145,8 @@ void texture_init (t_gameworld *game, t_image *texture, char* path)
         texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
         if (!texture->img)
         {
-            ft_putstr_fd("error: texture '", 2);
-            ft_putstr_fd(path, 2);
-            ft_putstr_fd("' not found.\n", 2);
-            exit (0);
+			if (msg_er("texture not found"))
+            	exit (0);
         }
         texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel), &(texture->line_length), &(texture->endian));
         texture->x = 0;
