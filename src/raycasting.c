@@ -59,57 +59,52 @@ int createRGB(int r, int g, int b)
     return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
 
-void	draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
-{
-	int i;
-	double l;
-	double m;
-	int a = 0;
+void draw_ceiling_and_floor(t_gameworld *data, int j) {
+    int k = 0;
+    while (k < data->start) {
+        data->map_info->celling.flag = createRGB(data->map_info->celling.r, data->map_info->celling.g, data->map_info->celling.b);
+        my_mlx_pixel_put(data, j, k, data->map_info->celling.flag);
+        k++;
+    }
+    while (k >= data->end && k < WIN_HIGHT) {
+        data->map_info->floor.flag = createRGB(data->map_info->floor.r, data->map_info->floor.g, data->map_info->floor.b);
+        my_mlx_pixel_put(data, j, k, data->map_info->floor.flag);
+        k++;
+    }
+}
 
-	i = data->start;
-	int k = 0;
-	if (data->orientation == NORTH)
-		a = NORTH;
-	if (data->orientation == SOUTH)
-		a = SOUTH;
-	if (data->orientation == EAST)
-		a = EAST;
-	if (data->orientation == WEST)
-		a = WEST;
-	if (hit_vert)
+void draw_walls(t_gameworld *data, int j, int color, int hit_horz, int hit_vert) {
+    int i = data->start;
+    double l, m;
+    int a = 0;
+
+    if (data->orientation == NORTH) a = NORTH;
+    if (data->orientation == SOUTH) a = SOUTH;
+    if (data->orientation == EAST)  a = EAST;
+    if (data->orientation == WEST)  a = WEST;
+
+    if (hit_vert)
         data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
     else if (hit_horz)
-	{
         data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
-	}
-	data->t[a].y = 0;
-	while (k < data->start)
-	{
-		data->map_info->celling.flag = createRGB(data->map_info->celling.r, data->map_info->celling.g, data->map_info->celling.b);
-		my_mlx_pixel_put(data, j, k, data->map_info->celling.flag);
-		k++;
-	}
-	data->t[a].y = 0;
-	while (i < data->end)
-	{
-		l = (double)data->t[a].h / data->wall_height;
-		m = data->t[a].y;
-		if (data->wall_height > WIN_HIGHT)
-        	data->t[a].y += l * (data->wall_height - WIN_HIGHT) / 2;
-		color = get_texture_color(&(data->t[a]), (int)data->t[a].x, (int)data->t[a].y);
-		data->t[a].y = m;
-		my_mlx_pixel_put(data, j, i, color);
-		i++;
-		k++;
-		data->t[a].y += l;
-	}
-	while (k >= data->end && k < WIN_HIGHT)
-	{
-		data->map_info->floor.flag = createRGB(data->map_info->floor.r, data->map_info->floor.g, data->map_info->floor.b);
-		my_mlx_pixel_put(data, j, k, data->map_info->floor.flag);
-		k++;
-	}
+
+    data->t[a].y = 0;
+    while (i < data->end) {
+        l = (double)data->t[a].h / data->wall_height;
+        m = data->t[a].y;
+
+        if (data->wall_height > WIN_HIGHT)
+            data->t[a].y += l * (data->wall_height - WIN_HIGHT) / 2;
+
+        color = get_texture_color(&(data->t[a]), (int)data->t[a].x, (int)data->t[a].y);
+        data->t[a].y = m;
+        my_mlx_pixel_put(data, j, i, color);
+
+        i++;
+        data->t[a].y += l;
+    }
 }
+
 
 double ft_distance (double px, double py, double wx, double wy)
 {
@@ -133,6 +128,12 @@ int ft_orientation(int hit_vert, int hit_horz, double i, t_gameworld *data)
 	if (hit_vert && sin(rayangle) > 0)
 		return(NORTH);
 	return (0);
+}
+
+void draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert) 
+{
+    draw_ceiling_and_floor(data, j);
+    draw_walls(data, j, color, hit_horz, hit_vert);
 }
 
 void ray_create(t_gameworld *data, double ray_y, double ray_x)
