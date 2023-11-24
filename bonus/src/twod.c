@@ -76,40 +76,40 @@ void	get_dir(t_gameworld *data)
 // 	}
 // }
 
-void	draw_wall_spaces(t_gameworld *data, int pos1, int pos2, char c)
-{
-	int	i;
-	int j;
+// void	draw_wall_spaces(t_gameworld *data, int pos1, int pos2, char c)
+// {
+// 	int	i;
+// 	int j;
 
-	i = 1;
-	if (c == '1')
-	{
-		i = 1;
-		while (i < 40)
-		{
-			j = 1;
-			while (j < 40)
-			{
-				my_mlx_pixel_put(data, pos2 * 40 + i, pos1 * 40 + j, 0x000FFF);
-				j+=2;
-			}
-			i+=2;
-		}
-	}
-	else
-	{
-		while (i < 40)
-		{
-			j = 1;
-			while (j < 40)
-			{
-				my_mlx_pixel_put(data, pos2 * 40 + i, pos1 * 40 + j, 0x000000);
-				j+=2;
-			}
-			i+=2;
-		}
-	}
-}
+// 	i = 1;
+// 	if (c == '1')
+// 	{
+// 		i = 1;
+// 		while (i < 40)
+// 		{
+// 			j = 1;
+// 			while (j < 40)
+// 			{
+// 				my_mlx_pixel_put(data, pos2 * 40 + i, pos1 * 40 + j, 0x000FFF);
+// 				j+=2;
+// 			}
+// 			i+=2;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		while (i < 40)
+// 		{
+// 			j = 1;
+// 			while (j < 40)
+// 			{
+// 				my_mlx_pixel_put(data, pos2 * 40 + i, pos1 * 40 + j, 0x000000);
+// 				j+=2;
+// 			}
+// 			i+=2;
+// 		}
+// 	}
+// }
 
 void	map_size(t_gameworld *data)
 {
@@ -119,27 +119,27 @@ void	map_size(t_gameworld *data)
 	data->w = ft_strlen(data->map_info->map[0]);
 }
 
-void	draw_elements(t_gameworld *data)
-{
-	int	i;
-	int	j;
-	// draw_hight(data);
-	// draw_width(data);
+// void	draw_elements(t_gameworld *data)
+// {
+// 	int	i;
+// 	int	j;
+// 	// draw_hight(data);
+// 	// draw_width(data);
 
-	i = 0;
-	while (data->map_info->map[i])
-	{
-		j = 0;
-		while (data->map_info->map[i][j])
-		{
-			draw_wall_spaces(data, i, j, data->map_info->map[i][j]);
-			j++;
-		}
-		i++;
-	}
-	mlx_put_image_to_window(data->connection, data->win,
-    data->imageToDraw.img, 0, 0);
-}
+// 	i = 0;
+// 	while (data->map_info->map[i])
+// 	{
+// 		j = 0;
+// 		while (data->map_info->map[i][j])
+// 		{
+// 			draw_wall_spaces(data, i, j, data->map_info->map[i][j]);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	mlx_put_image_to_window(data->connection, data->win,
+//     data->imageToDraw.img, 0, 0);
+// }
 void texture_init (t_gameworld *game, t_image *texture, char* path)
 {
         texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
