@@ -34,14 +34,6 @@ void	get_dir(t_gameworld *data)
     data->speed = 10;
 }
 
-void	map_size(t_gameworld *data)
-{
-	data->h = 0;
-	while (data->map_info->map[data->h])
-		data->h++;
-	data->w = ft_strlen(data->map_info->map[0]);
-}
-
 void texture_init (t_gameworld *game, t_image *texture, char* path)
 {
         texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
@@ -71,7 +63,6 @@ void image_init(t_gameworld *game)
 void    raycast(t_gameworld *world)
 {
 	world->checkEnter = 0;
-    //map_size(world);
     get_dir(world);
     world->map_info->player_x *= 40;
     world->map_info->player_y *= 40;

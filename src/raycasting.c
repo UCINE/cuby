@@ -183,7 +183,7 @@ int	ft_moves(int key, t_gameworld *data)
 {
 	int	y;
 	int	x;
-	printf("%d\n", key);
+
 	if (key == 65293 && data->checkEnter == 0)
 		data->checkEnter = 1;
 	if (key == 65307)
@@ -195,7 +195,6 @@ int	ft_moves(int key, t_gameworld *data)
 		realloc_image(data);
 		if (key == 115)
 		{
-    	    printf("Right\n");
 			// - sin(data->dir - M_PI/2) = cos(data->dir)
 			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
 			x = data->map_info->player_x;
@@ -209,7 +208,6 @@ int	ft_moves(int key, t_gameworld *data)
 		}
 		else if (key == 119)
 		{
-    	    printf("Left\n");
 			y = data->map_info->player_y - sin(data->dir + M_PI/2) * data->speed;
 			x = data->map_info->player_x;
 			if (data->map_info->map[y / GRID][x / GRID] != '1')
@@ -221,7 +219,6 @@ int	ft_moves(int key, t_gameworld *data)
 		}
 		else if (key == 97)
 		{
-    	    printf("up\n");
 			y = data->map_info->player_y - sin(data->dir + M_PI ) * data->speed;
 			x = data->map_info->player_x;
 			if (data->map_info->map[y / GRID][x / GRID] != '1')
@@ -233,7 +230,6 @@ int	ft_moves(int key, t_gameworld *data)
 		}
 		else if (key == 100)
 		{
-    	    printf("down\n");
 			y = data->map_info->player_y - sin(data->dir) * data->speed;
 			x = data->map_info->player_x;
 			if (data->map_info->map[y / GRID][x / GRID] != '1')
