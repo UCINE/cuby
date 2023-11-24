@@ -105,7 +105,6 @@ void draw_walls(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
     }
 }
 
-
 double ft_distance (double px, double py, double wx, double wy)
 {
 	double dx;
@@ -151,8 +150,8 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
         data->distance = 0;
         double y = ray_y;
         double x = ray_x;
-        double dy = cos(data->dir + i);
-        double dx = sin(data->dir + i);
+        double dy = cos(data->dir + i) / 15;
+        double dx = sin(data->dir + i) / 15;
 		hit_vert = 0;
 		hit_horz = 0;
         while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
@@ -167,6 +166,8 @@ void ray_create(t_gameworld *data, double ray_y, double ray_x)
         }
 		data->wall_hitx = x;
 		data->wall_hity = y;
+		x = roundf(x);
+		y = roundf(y);
 		double dis;
 		dis = ft_distance(ray_x, ray_y, x, y);
 		data->distance = dis;
