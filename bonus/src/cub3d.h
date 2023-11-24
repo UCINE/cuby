@@ -23,6 +23,14 @@
 
 #define WIN_HIGHT 1000
 #define WIN_WIDTH 1000
+// # define ESC 53
+// # define W 13
+// # define A 0
+// # define S 1
+// # define D 2
+//# define DEG_TO_RAD(degrees) ((degrees) * M_PI / 180.0)
+//# define ROTATION_SPEED DEG_TO_RAD(5.0)
+//# define M_PI 3.14159265358979323846
 # define player_size 10
 # define SCREEN_WIDTH 1152
 # define SCREEN_HEIGHT 512
@@ -143,6 +151,8 @@ typedef struct s_gameworld
 }	t_gameworld;
 
 
+
+//int 	is_walkable_tile(t_gameworld *world, int x, int y);
 void	map_fill(char **str, t_map *map);
 int		msg_er(char *str);
 int		check_for_textures(t_map *map);
@@ -155,5 +165,11 @@ void    raycast(t_gameworld *world);
 int		ft_moves(int key, t_gameworld *data);
 void	draw_elements(t_gameworld *data);
 void	my_mlx_pixel_put(t_gameworld *data, int x, int y, int color);
+int        mouse_motion_hook(int x, int y, void *param);
+//void 	ray_create(t_gameworld *data, double ray_y, double ray_x);
+//int 	calculatetilesize(char **map);
+// int 	key_hendler(int key, t_gameworld *world);
+// void	draw_square(t_gameworld *world, int x_start, int y_start, int size, int color);
+//int 	pixel_to_grid(int pixel_coordinate, int tile_size);
 
 #endif

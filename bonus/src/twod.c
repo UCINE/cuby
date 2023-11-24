@@ -198,6 +198,7 @@ void    raycast(t_gameworld *world)
     {
         printf("[%s]\n", world->map_info->map[i]);
     }
+    mlx_hook(world->win, 6, 1L<<6, mouse_motion_hook, world);
     mlx_hook(world->win, 2, 1L<<0, ft_moves, world);
 	mlx_hook(world->win, 17, 1L<<17, (void *)exit, world);
     mlx_loop(world->connection);

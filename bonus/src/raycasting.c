@@ -317,4 +317,24 @@ int	ft_moves(int key, t_gameworld *data)
 	return (0);
 }
 
+int        mouse_motion_hook(int x, int y, void *param)
+{
+        t_gameworld       *game;
 
+        game = (t_gameworld*)param;
+        if (x <= WIN_WIDTH && x >= 0 && y <= WIN_HIGHT && y >= 0)
+        {
+                if (game->mouse_x > x)
+                        game->dir += x * 0.00003;
+                else
+                        game->dir += -x * 0.00003;
+        }
+        game->mouse_x = x;
+        game->mouse_y = y;
+		realloc_image(game);
+		ray_create(game, game->map_info->player_y, game->map_info->player_x);
+		mlx_put_image_to_window(game->connection, game->win,
+    	game->imageToDraw.img, 0, 0);
+		mlx_destroy_image(game->connection, game->imageToDraw.img);
+        return (0);
+}
