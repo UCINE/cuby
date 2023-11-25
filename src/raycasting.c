@@ -59,7 +59,7 @@ int createRGB(int r, int g, int b)
     return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
 }
 
-void draw_ceiling_and_floor(t_gameworld *data, int j) 
+void draw_ceiling_and_floor(t_gameworld *data, int j)
 {
     int k = 0;
     while (k < data->start) 
@@ -68,6 +68,7 @@ void draw_ceiling_and_floor(t_gameworld *data, int j)
         my_mlx_pixel_put(data, j, k, data->map_info->celling.flag);
         k++;
     }
+	k = data->end;
     while (k >= data->end && k < WIN_HIGHT) 
 	{
         data->map_info->floor.flag = createRGB(data->map_info->floor.r, data->map_info->floor.g, data->map_info->floor.b);
@@ -135,50 +136,69 @@ void draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
     draw_walls(data, j, color, hit_horz, hit_vert);
 }
 
-void ray_create(t_gameworld *data, double ray_y, double ray_x)
+void calculate_ray_intersection(t_gameworld *data, double ray_y, double ray_x, double angle, int *hit_vert, int *hit_horz)
 {
-    double	i = -M_PI / 6;
-	int		j = WIN_WIDTH;
-	double increment;
-	int		hit_vert;
-	int		hit_horz;
-	int c = 0;
+    double y = ray_y;
+    double x = ray_x;
+    double dy = cos(data->dir + angle);
+    double dx = sin(data->dir + angle);
 
-	increment = (M_PI / 3) / WIN_WIDTH;
+    *hit_vert = 0;
+    *hit_horz = 0;
+
+    while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1') {
+        if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')
+            *hit_vert = 1;
+        if (data->map_info->map[(int)((y - dy) / GRID)][(int)(x / GRID)] == '1')
+            *hit_horz = 1;
+        x -= dx;
+        y -= dy;
+    }
+    data->wall_hitx = x;
+    data->wall_hity = y;
+    data->distance = ft_distance(ray_x, ray_y, x, y);
+    data->orientation = ft_orientation(*hit_vert, *hit_horz, angle, data);
+    data->wall_height = wall_hight(data, angle);
+}
+
+void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
+{
+    double i;
+    double increment = (M_PI / 3) / WIN_WIDTH;
+    int hit_vert;
+	int	hit_horz;
+
+	i = -M_PI / 6;
     while (i <= M_PI / 6)
-    {
-        data->distance = 0;
-        double y = ray_y;
-        double x = ray_x;
-        double dy = cos(data->dir + i) / 15;
-        double dx = sin(data->dir + i) / 15;
-		hit_vert = 0;
-		hit_horz = 0;
-        while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
-        {
-			
-			if (data->map_info->map[(int)(y / GRID)][(int)((x-dx) / GRID)] == '1')
-				hit_vert = 1;
-            if (data->map_info->map[(int)((y-dy) / GRID)][(int)(x / GRID)] == '1')
-				hit_horz = 1;
-            x -= dx;
-            y -= dy;
-        }
-		data->wall_hitx = x;
-		data->wall_hity = y;
-		x = roundf(x);
-		y = roundf(y);
-		double dis;
-		dis = ft_distance(ray_x, ray_y, x, y);
-		data->distance = dis;
-		data->orientation = ft_orientation(hit_vert, hit_horz, i, data);
-		data->wall_height = wall_hight(data, i);
-		get_start_end(data);
-		draw(data, j, 0xFF00FF, hit_horz, hit_vert);
-		j--;
-		c++;
+	{
+        calculate_ray_intersection(data, ray_y, ray_x, i, &hit_vert, &hit_horz);
+        get_start_end(data);
+
+        draw(data, j, 0xFFFFFF, hit_horz, hit_vert);
+        j--;
         i += increment;
     }
+}
+
+int	backward_movement(int key, t_gameworld *data)
+{
+	int	y;
+	int	x;
+
+		if (key == 115)
+		{
+			// - sin(data->dir - M_PI/2) = cos(data->dir)
+			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
+			x = data->map_info->player_x;
+			if (data->map_info->map[y / GRID][x / GRID] != '1')
+			//cos(data->dir- M_PI/2) = sin(data->dir)
+				data->map_info->player_y -= sin(data->dir - M_PI / 2) * data->speed;
+			x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
+			y = data->map_info->player_y;
+			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
+				data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
+		}
+		return (0);
 }
 
 int	ft_moves(int key, t_gameworld *data)
@@ -195,20 +215,8 @@ int	ft_moves(int key, t_gameworld *data)
 		if (key != 65363 && key != 65361 && key != 119 && key != 115 && key != 65293 && key != 97 && key != 100)
 			return (0);
 		realloc_image(data);
-		if (key == 115)
-		{
-			// - sin(data->dir - M_PI/2) = cos(data->dir)
-			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-			//cos(data->dir- M_PI/2) = sin(data->dir)
-				data->map_info->player_y -= sin(data->dir - M_PI / 2) * data->speed;
-			x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
-			y = data->map_info->player_y;
-			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
-		}
-		else if (key == 119)
+		backward_movement(key, data);
+		if (key == 119)
 		{
 			y = data->map_info->player_y - sin(data->dir + M_PI/2) * data->speed;
 			x = data->map_info->player_x;
@@ -249,12 +257,11 @@ int	ft_moves(int key, t_gameworld *data)
 			data->dir+= 0.1;
 		else if (key == 65363)
 			data->dir -= 0.1;
-		ray_create(data, data->map_info->player_y, data->map_info->player_x);
+		draw_ray(data, data->map_info->player_y, data->map_info->player_x, WIN_WIDTH);
 		mlx_put_image_to_window(data->connection, data->win,
     	data->imageToDraw.img, 0, 0);
 		mlx_destroy_image(data->connection, data->imageToDraw.img);
 	}
 	return (0);
 }
-
 

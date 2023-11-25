@@ -3,7 +3,7 @@ NO ./texture/north_texture.xpm
 SO ./texture/south_texture.xpm
 EA ./texture/east_texture.xpm
 C 100,255,255
-F 000,0,0
+F 0,0,0
 
 111111111111111111111111111111111111111
 110010000000000000000000000000000000001

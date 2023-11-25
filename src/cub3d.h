@@ -132,7 +132,7 @@ typedef struct s_gameworld
 	double			wall_hity;
 	bool			checkEnter;
 	t_image			image;
-	t_image t[5];
+	t_image t[4];
 	int orientation;
 	// char			**map;		
     // t_character		player;
