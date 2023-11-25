@@ -136,10 +136,10 @@ void draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
     draw_walls(data, j, color, hit_horz, hit_vert);
 }
 
-void calculate_ray_intersection(t_gameworld *data, double ray_y, double ray_x, double angle, int *hit_vert, int *hit_horz)
+void calculate_ray_intersection(t_gameworld *data, double p_y, double p_x, double angle, int *hit_vert, int *hit_horz)
 {
-    double y = ray_y;
-    double x = ray_x;
+    double y = p_y;
+    double x = p_x;
     double dy = cos(data->dir + angle);
     double dx = sin(data->dir + angle);
 
@@ -157,7 +157,7 @@ void calculate_ray_intersection(t_gameworld *data, double ray_y, double ray_x, d
     }
     data->wall_hitx = x;
     data->wall_hity = y;
-    data->distance = ft_distance(ray_x, ray_y, x, y);
+    data->distance = ft_distance(p_x, p_y, x, y);
     data->orientation = ft_orientation(*hit_vert, *hit_horz, angle, data);
     data->wall_height = wall_hight(data, angle);
 }
@@ -174,7 +174,6 @@ void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
 	{
         calculate_ray_intersection(data, ray_y, ray_x, angle, &hit_vert, &hit_horz);
         get_start_end(data);
-
         draw(data, j, 0xFFFFFF, hit_horz, hit_vert);
         j--;
         angle += increment;
