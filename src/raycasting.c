@@ -163,23 +163,41 @@ void calculate_ray_intersection(t_gameworld *data, double ray_y, double ray_x, d
 
 void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
 {
-    double i;
+    double angle;
     double increment = (M_PI / 3) / WIN_WIDTH;
     int hit_vert;
 	int	hit_horz;
 
-	i = -M_PI / 6;
-    while (i <= M_PI / 6)
+	angle = -M_PI / 6;
+    while (angle <= M_PI / 6)
 	{
-        calculate_ray_intersection(data, ray_y, ray_x, i, &hit_vert, &hit_horz);
+        calculate_ray_intersection(data, ray_y, ray_x, angle, &hit_vert, &hit_horz);
         get_start_end(data);
 
         draw(data, j, 0xFFFFFF, hit_horz, hit_vert);
         j--;
-        i += increment;
+        angle += increment;
     }
 }
 
+int	forward_movement(int key, t_gameworld *data)
+{
+	int x;
+	int y;
+
+	if (key == 119)
+		{
+			y = data->map_info->player_y - sin(data->dir + M_PI/2) * data->speed;
+			x = data->map_info->player_x;
+			if (data->map_info->map[y / GRID][x / GRID] != '1')
+				data->map_info->player_y -= sin(data->dir+ M_PI/2) * data->speed;
+			x = data->map_info->player_x + cos(data->dir+ M_PI/2) * data->speed;
+			y = data->map_info->player_y;
+			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
+				data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
+		}
+	return (0);
+}
 int	backward_movement(int key, t_gameworld *data)
 {
 	int	y;
@@ -216,18 +234,8 @@ int	ft_moves(int key, t_gameworld *data)
 			return (0);
 		realloc_image(data);
 		backward_movement(key, data);
-		if (key == 119)
-		{
-			y = data->map_info->player_y - sin(data->dir + M_PI/2) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-				data->map_info->player_y -= sin(data->dir+ M_PI/2) * data->speed;
-			x = data->map_info->player_x + cos(data->dir+ M_PI/2) * data->speed;
-			y = data->map_info->player_y;
-			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
-		}
-		else if (key == 97)
+		forward_movement(key, data);
+		if (key == 97)
 		{
 			y = data->map_info->player_y - sin(data->dir + M_PI ) * data->speed;
 			x = data->map_info->player_x;
