@@ -218,23 +218,12 @@ int	backward_movement(int key, t_gameworld *data)
 		return (0);
 }
 
-int	ft_moves(int key, t_gameworld *data)
+int right_movement(int key, t_gameworld *data)
 {
 	int	y;
 	int	x;
 
-	if (key == 65293 && data->checkEnter == 0)
-		data->checkEnter = 1;
-	if (key == 65307)
-		exit(0);
-	if (data->checkEnter == 1)
-	{
-		if (key != 65363 && key != 65361 && key != 119 && key != 115 && key != 65293 && key != 97 && key != 100)
-			return (0);
-		realloc_image(data);
-		backward_movement(key, data);
-		forward_movement(key, data);
-		if (key == 97)
+	if (key == 97)
 		{
 			y = data->map_info->player_y - sin(data->dir + M_PI ) * data->speed;
 			x = data->map_info->player_x;
@@ -245,7 +234,15 @@ int	ft_moves(int key, t_gameworld *data)
 			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
 				data->map_info->player_x += cos(data->dir + M_PI) * data->speed;
 		}
-		else if (key == 100)
+	return (0);
+}
+
+int left_movement(int key, t_gameworld *data)
+{
+	int y;
+	int x;
+
+	if (key == 100)
 		{
 			y = data->map_info->player_y - sin(data->dir) * data->speed;
 			x = data->map_info->player_x;
@@ -260,7 +257,24 @@ int	ft_moves(int key, t_gameworld *data)
 			if (data->map_info->map[y / GRID][x / GRID] != '1')
 				data->map_info->player_x += cos(data->dir) * data->speed;
 		}
-		else if (key == 65361)
+	return (0);
+}
+int	ft_moves(int key, t_gameworld *data)
+{
+	if (key == 65293 && data->checkEnter == 0)
+		data->checkEnter = 1;
+	if (key == 65307)
+		exit(0);
+	if (data->checkEnter == 1)
+	{
+		if (key != 65363 && key != 65361 && key != 119 && key != 115 && key != 65293 && key != 97 && key != 100)
+			return (0);
+		realloc_image(data);
+		backward_movement(key, data);
+		forward_movement(key, data);
+		right_movement(key, data);
+		left_movement(key, data);
+		if (key == 65361)
 			data->dir+= 0.1;
 		else if (key == 65363)
 			data->dir -= 0.1;
