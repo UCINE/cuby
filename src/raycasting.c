@@ -146,7 +146,8 @@ void calculate_ray_intersection(t_gameworld *data, double ray_y, double ray_x, d
     *hit_vert = 0;
     *hit_horz = 0;
 
-    while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1') {
+    while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
+	{
         if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')
             *hit_vert = 1;
         if (data->map_info->map[(int)((y - dy) / GRID)][(int)(x / GRID)] == '1')
