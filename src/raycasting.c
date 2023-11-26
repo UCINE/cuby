@@ -81,14 +81,21 @@ void draw_ceiling_and_floor(t_gameworld *data, int j)
 
 void draw_walls(t_gameworld *data, int j, int color, t_ray *ray) 
 {
-    int i = data->start;
-    double l, m;
-    int a = 0;
+    int		i;
+    double	l;
+	double	m;
+    int		a;
 
-    if (data->orientation == NORTH) a = NORTH;
-    if (data->orientation == SOUTH) a = SOUTH;
-    if (data->orientation == EAST)  a = EAST;
-    if (data->orientation == WEST)  a = WEST;
+	a = 0;
+	i = data->start;
+    if (data->orientation == NORTH) 
+		a = NORTH;
+    if (data->orientation == SOUTH)
+		a = SOUTH;
+    if (data->orientation == EAST)
+		a = EAST;
+    if (data->orientation == WEST)
+		a = WEST;
     if (ray->hit_vert)
         data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
     else if (ray->hit_horz)
