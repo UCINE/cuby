@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   twod.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/16 03:21:50 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/24 21:45:51 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,9 @@ void texture_init (t_gameworld *game, t_image *texture, char* path)
         texture->img = mlx_xpm_file_to_image(game->connection, path, &(texture->w), &(texture->h));
         if (!texture->img)
         {
-			if (msg_er("texture not found"))
-            	exit (0);
+			printf("'%s'\n", path);
+			msg_er("texture not found");
+            exit (0);
         }
         texture->addr = mlx_get_data_addr(texture->img, &(texture->bits_per_pixel), &(texture->line_length), &(texture->endian));
         texture->x = 0;
@@ -169,10 +170,10 @@ void	welcomer(t_gameworld *world)
 
 void image_init(t_gameworld *game)
 {
-	texture_init(game, &(game->t[NORTH]), "./texture/north_texture.xpm");
-	texture_init(game, &(game->t[SOUTH]), "./texture/south_texture.xpm");
-	texture_init(game, &(game->t[EAST]), "./texture/east_texture.xpm");
-	texture_init(game, &(game->t[WEST]), "./texture/west_texture.xpm");
+	texture_init(game, &(game->t[NORTH]), game->map_info->n_path);
+	texture_init(game, &(game->t[SOUTH]), game->map_info->s_path);
+	texture_init(game, &(game->t[EAST]), game->map_info->e_path);
+	texture_init(game, &(game->t[WEST]), game->map_info->w_path);
 }
 
 void    raycast(t_gameworld *world)
