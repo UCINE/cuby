@@ -142,6 +142,7 @@ typedef struct s_gameworld
 	double			was_hit_horizontal;
 	double			is_ray_facing_up;
 	double			is_ray_facing_down;
+	double			current_texture_index;
 	double			is_ray_facing_left;
 	double			is_ray_facing_right;
 	int			wall_height;

@@ -79,40 +79,53 @@ void draw_ceiling_and_floor(t_gameworld *data, int j)
     }
 }
 
-void draw_walls(t_gameworld *data, int j, int color, t_ray *ray) 
+void draw_wall_s(t_gameworld *data, int j, int color)
 {
-    int		i;
-    double	l;
-	double	m;
-    int		a;
+    int i = data->start;
+    double l, m;
+    int a = data->current_texture_index;
 
-	a = 0;
-	i = data->start;
-    if (data->orientation == NORTH) 
-		a = NORTH;
-    if (data->orientation == SOUTH)
-		a = SOUTH;
-    if (data->orientation == EAST)
-		a = EAST;
-    if (data->orientation == WEST)
-		a = WEST;
-    if (ray->hit_vert)
-        data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
-    else if (ray->hit_horz)
-        data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
-    data->t[a].y = 0;
-    while (i < data->end) 
+    while (i < data->end)
 	{
         l = (double)data->t[a].h / data->wall_height;
         m = data->t[a].y;
         if (data->wall_height > WIN_HIGHT)
             data->t[a].y += l * (data->wall_height - WIN_HIGHT) / 2;
+
         color = get_texture_color(&(data->t[a]), (int)data->t[a].x, (int)data->t[a].y);
         data->t[a].y = m;
         my_mlx_pixel_put(data, j, i, color);
         i++;
         data->t[a].y += l;
     }
+}
+
+void setup_wall_parameters(t_gameworld *data, t_ray *ray)
+{
+    int a = 0;
+
+    if (data->orientation == NORTH) 
+        a = NORTH;
+    else if (data->orientation == SOUTH)
+        a = SOUTH;
+    else if (data->orientation == EAST)
+        a = EAST;
+    else if (data->orientation == WEST)
+        a = WEST;
+
+    if (ray->hit_vert)
+        data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
+    else if (ray->hit_horz)
+        data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
+
+    data->t[a].y = 0;
+    data->current_texture_index = a;
+}
+
+void draw_walls(t_gameworld *data, int j, int color, t_ray *ray)
+{
+    setup_wall_parameters(data, ray);
+    draw_wall_s(data, j, color);
 }
 
 double ft_distance (double px, double py, double wx, double wy)
@@ -297,6 +310,8 @@ int	ft_moves(int key, t_gameworld *data)
 	}
 	return (0);
 }
+
+
 int        mouse_motion_hook(int x, int y, void *param)
 {
         t_gameworld       *game;
