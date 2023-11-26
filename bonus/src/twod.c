@@ -75,10 +75,6 @@ void    raycast(t_gameworld *world)
 	world->win = mlx_new_window(world->connection, WIN_WIDTH,
 		WIN_HIGHT, "cub3D");
 	welcomer(world);
-    for (int i = 0; i < world->h; i++)
-    {
-        printf("[%s]\n", world->map_info->map[i]);
-    }
 	mlx_hook(world->win, 6, 1L<<6, mouse_motion_hook, world);
     mlx_hook(world->win, 2, 1L<<0, ft_moves, world);
 	mlx_hook(world->win, 17, 1L<<17, (void *)exit, world);
