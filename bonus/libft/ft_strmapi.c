@@ -36,7 +36,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 // char f(unsigned int i, char j)
 // {
 // 	j =  j + i;
-// 	return j;
+// 	return (j);
 // }
 // int main()
 // {

@@ -22,7 +22,7 @@ void	ft_putnbr_fd(int n, int fd)
 		ft_putnbr_fd(n % 10, fd);
 	}
 	else if (n == -2147483648)
-		write (fd, "-2147483648", 11);
+		write(fd, "-2147483648", 11);
 	else
 	{
 		ft_putchar_fd('-', fd);

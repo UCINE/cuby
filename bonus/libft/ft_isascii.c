@@ -19,12 +19,13 @@ int	ft_isascii(int c)
 	return (0);
 }
 /*
-#include<stdio.h>
-int main()
+#include <stdio.h>
+
+int	main(void)
 {
-    printf("my function: %i\n", ft_isascii('a'));
-    printf("my function: %i\n", ft_isascii('5'));
-    printf("my function: %i\n", ft_isascii(128));
-    return 0;
+	printf("my function: %i\n", ft_isascii('a'));
+	printf("my function: %i\n", ft_isascii('5'));
+	printf("my function: %i\n", ft_isascii(128));
+	return (0);
 }
 */

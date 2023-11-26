@@ -19,10 +19,11 @@ int	ft_isprint(int c)
 	return (0);
 }
 /*
-#include<stdio.h>
-int main()
+#include <stdio.h>
+
+int	main(void)
 {
-    printf("%i\n", ft_isprint('a'));
-    printf("%i\n", ft_isprint(127));
+	printf("%i\n", ft_isprint('a'));
+	printf("%i\n", ft_isprint(127));
 }
 */

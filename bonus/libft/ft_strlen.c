@@ -29,5 +29,5 @@ size_t	ft_strlen(const char *s)
 // {
 // 	char *str = "123hel123lo123";
 // 	printf("the size of '%s' is: %zu\n",str, ft_strlen(str));
-// 	return 0;
+// 	return (0);
 // }

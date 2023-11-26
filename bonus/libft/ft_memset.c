@@ -34,5 +34,5 @@ void	*ft_memset(void *b, int c, size_t len)
 // 	char str1[10] = "hello";
 // 	printf("memset: %s\n", memset(str, '@', 2));
 // 	printf("ft_memset: %s\n", ft_memset(str1, '@', 2));
-// 	return 0;
+// 	return (0);
 // }

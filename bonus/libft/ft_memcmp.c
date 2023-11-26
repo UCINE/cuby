@@ -36,5 +36,5 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 // {
 //     printf("mem: %i\n", memcmp("abcdefghij", "abcdefgxyz", 7));
 //     printf("ft_: %i\n", ft_memcmp("abcdefghij", "abcdefgxyz", 7));
-//     return 0;
+//     return (0);
 // }

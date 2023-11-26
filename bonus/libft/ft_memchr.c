@@ -32,5 +32,5 @@ void	*ft_memchr(const void *s, int c, size_t n)
 //     char str[] = "hey what's up";
 //     printf("mem: %s\n", memchr(str,'e', 6));
 //     printf("ft_: %s\n", ft_memchr(str, 'e', 6));
-//     return 0;
+//     return (0);
 // }

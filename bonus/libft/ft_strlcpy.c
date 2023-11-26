@@ -26,7 +26,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 			dst[index] = src[index];
 			index++;
 		}
-	dst[index] = '\0';
+		dst[index] = '\0';
 	}
 	return (srcsize);
 }
@@ -44,5 +44,5 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 //     // ft_strlcpy(strdst1, strsrc, 2);
 //     printf("ft_strlpy: %s\n", strdst1);
 //     printf("%zu\n", ft_strlcpy(strdst1, strsrc, sizeof(strdst1)));
-//     return 0;
+//     return (0);
 // }
