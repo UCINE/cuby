@@ -33,5 +33,5 @@ char	*ft_strchr(const char *s, int c)
 // 	char str[] = "hello there";
 // 	printf("str: %s\n", strchr(str, '\0'));
 // 	printf("ft_: %s\n", ft_strchr(str, '\0'));
-// 	return 0;
+// 	return (0);
 // }

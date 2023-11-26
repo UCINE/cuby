@@ -3,220 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 03:51:10 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/17 22:35:50 by lahamoun         ###   ########.fr       */
+/*   Updated: 2023/11/26 23:46:42 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <math.h>
-
-void    realloc_image(t_gameworld *world)
-{
-	world->imageToDraw.img = mlx_new_image(world->connection, 
-    WIN_WIDTH, WIN_HIGHT);
-    world->imageToDraw.addr = mlx_get_data_addr(world->imageToDraw.img,
-		&world->imageToDraw.bits_per_pixel, &world->imageToDraw.line_length,
-		&world->imageToDraw.endian);
-}
-
-double	wall_hight(t_gameworld *data, double ray)
-{
-	double	height = 0;
-	double	real_dis = 0;
-	
-	real_dis = data->distance * cos(ray);
-	height = (GRID * WIN_HIGHT) / real_dis;
-	return (height);
-}
-
-void	get_start_end(t_gameworld *data)
-{
-	data->start = (int)((WIN_HIGHT / 2) - (data->wall_height / 2));
-	data->end = (int)((WIN_HIGHT / 2) + (data->wall_height / 2));
-	if (data->start < 0)
-		data->start = 0;
-	if (data->end >= WIN_HIGHT)
-		data->end = WIN_HIGHT - 1;
-}
-
-int get_texture_color(t_image *texture, int x, int y)
-{
-    int pixel_position;
-    unsigned int color;
-
-    if (x < 0 || y < 0 || x >= texture->w || y >= texture->h)
-        return (0);
-    pixel_position = y * texture->line_length + x * (texture->bits_per_pixel / 8);
-    color = *(unsigned int *)(texture->addr + pixel_position);
-    return (color);
-}
-
-int createRGB(int r, int g, int b)
-{   
-    return ((r & 0xff) << 16) + ((g & 0xff) << 8) + (b & 0xff);
-}
-
-void draw_ceiling_and_floor(t_gameworld *data, int j)
-{
-    int k = 0;
-    while (k < data->start) 
-	{
-        data->map_info->celling.flag = createRGB(data->map_info->celling.r, 
-			data->map_info->celling.g, data->map_info->celling.b);
-        my_mlx_pixel_put(data, j, k, data->map_info->celling.flag);
-        k++;
-    }
-	k = data->end;
-    while (k >= data->end && k < WIN_HIGHT) 
-	{
-        data->map_info->floor.flag = createRGB(data->map_info->floor.r, 
-			data->map_info->floor.g, data->map_info->floor.b);
-        my_mlx_pixel_put(data, j, k, data->map_info->floor.flag);
-        k++;
-    }
-}
-
-void draw_wall_s(t_gameworld *data, int j, int color)
-{
-    int i = data->start;
-    double l, m;
-    int a = data->current_texture_index;
-
-    while (i < data->end)
-	{
-        l = (double)data->t[a].h / data->wall_height;
-        m = data->t[a].y;
-        if (data->wall_height > WIN_HIGHT)
-            data->t[a].y += l * (data->wall_height - WIN_HIGHT) / 2;
-
-        color = get_texture_color(&(data->t[a]), (int)data->t[a].x, (int)data->t[a].y);
-        data->t[a].y = m;
-        my_mlx_pixel_put(data, j, i, color);
-        i++;
-        data->t[a].y += l;
-    }
-}
-
-void setup_wall_parameters(t_gameworld *data, t_ray *ray)
-{
-    int a = 0;
-
-    if (data->orientation == NORTH) 
-        a = NORTH;
-    else if (data->orientation == SOUTH)
-        a = SOUTH;
-    else if (data->orientation == EAST)
-        a = EAST;
-    else if (data->orientation == WEST)
-        a = WEST;
-
-    if (ray->hit_vert)
-        data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
-    else if (ray->hit_horz)
-        data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
-
-    data->t[a].y = 0;
-    data->current_texture_index = a;
-}
-
-void draw_walls(t_gameworld *data, int j, int color, t_ray *ray)
-{
-    setup_wall_parameters(data, ray);
-    draw_wall_s(data, j, color);
-}
-
-double ft_distance (double px, double py, double wx, double wy)
-{
-	double dx;
-	double dy;
-
-	dx = px - wx;
-	dy = py - wy;
-	return (sqrt(dx * dx + dy * dy));
-}
-
-int ft_orientation(int hit_vert, int hit_horz, double i, t_gameworld *data)
-{
-	double rayangle = data->dir + i;
-	if (hit_horz && cos(rayangle) < 0)
-		return(WEST);
-	if (hit_horz && cos(rayangle) > 0)
-		return(EAST);
-	if (hit_vert && sin(rayangle) < 0)
-		return(SOUTH);
-	if (hit_vert && sin(rayangle) > 0)
-		return(NORTH);
-	return (0);
-}
-
-void draw(t_gameworld *data, int j, int color, t_ray ray)
-{
-    draw_ceiling_and_floor(data, j);
-    draw_walls(data, j, color, &ray);
-}
-
-void calculate_ray_intersection(t_gameworld *data, t_ray *ray)
-{
-    double y = ray->p_y;
-    double x = ray->p_x;
-    double dy = cos(data->dir + ray->angle);
-    double dx = sin(data->dir + ray->angle);
-
-    ray->hit_vert = 0;
-    ray->hit_horz = 0;
-    while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
-	{
-        if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')
-            ray->hit_vert = 1;
-        if (data->map_info->map[(int)((y - dy) / GRID)][(int)(x / GRID)] == '1')
-            ray->hit_horz = 1;
-        x -= dx;
-        y -= dy;
-    }
-    data->wall_hitx = x;
-    data->wall_hity = y;
-    data->distance = ft_distance(ray->p_x, ray->p_y, x, y);
-    data->orientation = ft_orientation(ray->hit_vert, ray->hit_horz, ray->angle, data);
-    data->wall_height = wall_hight(data, ray->angle);
-}
-
-void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
-{
-	t_ray	ray;
-    double increment = (M_PI / 3) / WIN_WIDTH;
-
-	ray.p_y = ray_y;
-    ray.p_x = ray_x;
-	ray.angle = -M_PI / 6;
-    while (ray.angle <= M_PI / 6)
-	{
-        calculate_ray_intersection(data, &ray);
-        get_start_end(data);
-        draw(data, j, 0xFFFFFF, ray);
-        j--;
-        ray.angle += increment;
-    }
-}
 
 int	forward_movement(int key, t_gameworld *data)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	if (key == 119)
-		{
-			y = data->map_info->player_y - sin(data->dir + M_PI/2) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-				data->map_info->player_y -= sin(data->dir+ M_PI/2) * data->speed;
-			x = data->map_info->player_x + cos(data->dir+ M_PI/2) * data->speed;
-			y = data->map_info->player_y;
-			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir+ M_PI/2) * data->speed;
-		}
+	{
+		y = data->map_info->player_y - sin(data->dir + M_PI / 2) * data->speed;
+		x = data->map_info->player_x;
+		if (data->map_info->map[y / GRID][x / GRID] != '1')
+			data->map_info->player_y -= sin(data->dir + M_PI / 2) * data->speed;
+		x = data->map_info->player_x + cos(data->dir + M_PI / 2) * data->speed;
+		y = data->map_info->player_y;
+		if (data->map_info->map[data->map_info->player_y / GRID][x
+			/ GRID] != '1')
+			data->map_info->player_x += cos(data->dir + M_PI / 2) * data->speed;
+	}
 	return (0);
 }
 
@@ -225,73 +37,73 @@ int	backward_movement(int key, t_gameworld *data)
 	int	y;
 	int	x;
 
-		if (key == 115)
-		{
-			// - sin(data->dir - M_PI/2) = cos(data->dir)
-			y = data->map_info->player_y - sin(data->dir - M_PI/2) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-			//cos(data->dir- M_PI/2) = sin(data->dir)
-				data->map_info->player_y -= sin(data->dir - M_PI / 2) * data->speed;
-			x = data->map_info->player_x + cos(data->dir- M_PI/2) * data->speed;
-			y = data->map_info->player_y;
-			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir- M_PI/2) * data->speed;
-		}
-		return (0);
+	if (key == 115)
+	{
+		y = data->map_info->player_y - sin(data->dir - M_PI / 2) * data->speed;
+		x = data->map_info->player_x;
+		if (data->map_info->map[y / GRID][x / GRID] != '1')
+			data->map_info->player_y -= sin(data->dir - M_PI / 2) * data->speed;
+		x = data->map_info->player_x + cos(data->dir - M_PI / 2) * data->speed;
+		y = data->map_info->player_y;
+		if (data->map_info->map[data->map_info->player_y / GRID][x
+			/ GRID] != '1')
+			data->map_info->player_x += cos(data->dir - M_PI / 2) * data->speed;
+	}
+	return (0);
 }
 
-int right_movement(int key, t_gameworld *data)
+int	right_movement(int key, t_gameworld *data)
 {
 	int	y;
 	int	x;
 
 	if (key == 97)
-		{
-			y = data->map_info->player_y - sin(data->dir + M_PI ) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-				data->map_info->player_y -= sin(data->dir + M_PI ) * data->speed;
-			x = data->map_info->player_x + cos(data->dir + M_PI) * data->speed;
-			y = data->map_info->player_y;
-			if (data->map_info->map[data->map_info->player_y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir + M_PI) * data->speed;
-		}
+	{
+		y = data->map_info->player_y - sin(data->dir + M_PI) * data->speed;
+		x = data->map_info->player_x;
+		if (data->map_info->map[y / GRID][x / GRID] != '1')
+			data->map_info->player_y -= sin(data->dir + M_PI) * data->speed;
+		x = data->map_info->player_x + cos(data->dir + M_PI) * data->speed;
+		y = data->map_info->player_y;
+		if (data->map_info->map[data->map_info->player_y / GRID][x
+			/ GRID] != '1')
+			data->map_info->player_x += cos(data->dir + M_PI) * data->speed;
+	}
 	return (0);
 }
 
-int left_movement(int key, t_gameworld *data)
+int	left_movement(int key, t_gameworld *data)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	if (key == 100)
+	{
+		y = data->map_info->player_y - sin(data->dir) * data->speed;
+		x = data->map_info->player_x;
+		if (data->map_info->map[y / GRID][x / GRID] != '1')
 		{
-			y = data->map_info->player_y - sin(data->dir) * data->speed;
-			x = data->map_info->player_x;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-			{
-				y = data->map_info->player_y;
-				data->map_info->player_y -= sin(data->dir) * data->speed;
-			}
-			else
-				y = data->map_info->player_y;
-			x = data->map_info->player_x + cos(data->dir) * data->speed;
-			if (data->map_info->map[y / GRID][x / GRID] != '1')
-				data->map_info->player_x += cos(data->dir) * data->speed;
+			y = data->map_info->player_y;
+			data->map_info->player_y -= sin(data->dir) * data->speed;
 		}
+		else
+			y = data->map_info->player_y;
+		x = data->map_info->player_x + cos(data->dir) * data->speed;
+		if (data->map_info->map[y / GRID][x / GRID] != '1')
+			data->map_info->player_x += cos(data->dir) * data->speed;
+	}
 	return (0);
 }
 
 int	ft_moves(int key, t_gameworld *data)
 {
-	if (key == 65293 && data->checkEnter == 0)
-		data->checkEnter = 1;
+	if (key == 65293 && data->checkenter == 0)
+		data->checkenter = 1;
 	if (key == 65307)
 		exit(0);
-	if (data->checkEnter == 1)
+	if (data->checkenter == 1)
 	{
-		if (key != 65363 && key != 65361 && key != 119 && key != 115 
+		if (key != 65363 && key != 65361 && key != 119 && key != 115
 			&& key != 65293 && key != 97 && key != 100)
 			return (0);
 		realloc_image(data);
@@ -300,36 +112,14 @@ int	ft_moves(int key, t_gameworld *data)
 		right_movement(key, data);
 		left_movement(key, data);
 		if (key == 65361)
-			data->dir+= 0.1;
+			data->dir += 0.1;
 		else if (key == 65363)
 			data->dir -= 0.1;
-		draw_ray(data, data->map_info->player_y, data->map_info->player_x, WIN_WIDTH);
+		draw_ray(data, data->map_info->player_y, data->map_info->player_x,
+			WIN_WIDTH);
 		mlx_put_image_to_window(data->connection, data->win,
-    	data->imageToDraw.img, 0, 0);
-		mlx_destroy_image(data->connection, data->imageToDraw.img);
+			data->imagetodraw.img, 0, 0);
+		mlx_destroy_image(data->connection, data->imagetodraw.img);
 	}
 	return (0);
-}
-
-
-int        mouse_motion_hook(int x, int y, void *param)
-{
-        t_gameworld       *game;
-
-        game = (t_gameworld*)param;
-        if (x <= WIN_WIDTH && x >= 0 && y <= WIN_HIGHT && y >= 0)
-        {
-                if (game->mouse_x > x)
-                        game->dir += x * 0.00003;
-                else
-                        game->dir += -x * 0.00003;
-        }
-        game->mouse_x = x;
-        game->mouse_y = y;
-		realloc_image(game);
-		draw_ray(game, game->map_info->player_y, game->map_info->player_x, WIN_WIDTH);
-		mlx_put_image_to_window(game->connection, game->win,
-    	game->imageToDraw.img, 0, 0);
-		mlx_destroy_image(game->connection, game->imageToDraw.img);
-        return (0);
 }

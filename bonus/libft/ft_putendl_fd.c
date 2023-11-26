@@ -19,10 +19,10 @@ void	ft_putendl_fd(char *s, int fd)
 	index = 0;
 	while (s && s[index] != '\0')
 	{
-		write (fd, &s[index], 1);
+		write(fd, &s[index], 1);
 		index++;
 	}
-	write (fd, "\n", 1);
+	write(fd, "\n", 1);
 }
 
 // int main()

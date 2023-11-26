@@ -18,16 +18,15 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned char	*ss1;
 	unsigned char	*ss2;
 
-	ss1 = (unsigned char *) s1;
-	ss2 = (unsigned char *) s2;
+	ss1 = (unsigned char *)s1;
+	ss2 = (unsigned char *)s2;
 	index = 0;
-	while (index < n && (ss1[index] != '\0'
-			|| ss2[index] != '\0'))
+	while (index < n && (ss1[index] != '\0' || ss2[index] != '\0'))
 	{
 		if (ss1[index] != ss2[index])
 			return (ss1[index] - ss2[index]);
 		index++;
-	}	
+	}
 	return (0);
 }
 // #include<stdio.h>

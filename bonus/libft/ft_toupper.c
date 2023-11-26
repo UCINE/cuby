@@ -17,10 +17,11 @@ int	ft_toupper(int c)
 	return (c);
 }
 /*
-#include<stdio.h>
-int main()
+#include <stdio.h>
+
+int	main(void)
 {
-    printf("%c", ft_toupper('c'));
-    return 0;
+	printf("%c", ft_toupper('c'));
+	return (0);
 }
 */

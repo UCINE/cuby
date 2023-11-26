@@ -25,7 +25,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = malloc(1);
 		s1[0] = '\0';
 	}
-	new_line = malloc (ft_strlen(s1) + ft_strlen(s2) + 1);
+	new_line = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new_line)
 		return (NULL);
 	while (s1[i])

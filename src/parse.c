@@ -18,7 +18,7 @@ void	get_dirs(t_map *map, char *str, char flag)
 	int	j;
 
 	i = 0;
-	while(str[i] == ' ' || str[i] == '\t')
+	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	j = i;
 	while (str[i])

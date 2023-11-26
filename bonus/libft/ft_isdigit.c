@@ -19,14 +19,15 @@ int	ft_isdigit(int c)
 	return (0);
 }
 /*
-#include<stdio.h>
-int main()
+#include <stdio.h>
+
+int	main(void)
 {
-    printf("1 :%i\n", ft_isdigit('1'));
-    printf("/ :%i\n", ft_isdigit('/'));
-    printf("0 :%i\n", ft_isdigit('0'));
-    printf("9 :%i\n", ft_isdigit('9'));
-    printf("g :%i\n", ft_isdigit('g'));
-    return 0;
+	printf("1 :%i\n", ft_isdigit('1'));
+	printf("/ :%i\n", ft_isdigit('/'));
+	printf("0 :%i\n", ft_isdigit('0'));
+	printf("9 :%i\n", ft_isdigit('9'));
+	printf("g :%i\n", ft_isdigit('g'));
+	return (0);
 }
 */

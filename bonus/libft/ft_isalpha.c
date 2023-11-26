@@ -22,10 +22,10 @@ int	ft_isalpha(int c)
  #include<stdio.h>
  int main()
  {
-     printf("Z: %i\n", ft_isalpha('Z'));
-     printf("A: %i\n", ft_isalpha('A'));
-     printf("a: %i\n", ft_isalpha('a'));
-     printf("z: %i\n", ft_isalpha('z'));
-     printf("5: %i\n", ft_isalpha('5'));
-     return 0;
+		printf("Z: %i\n", ft_isalpha('Z'));
+		printf("A: %i\n", ft_isalpha('A'));
+		printf("a: %i\n", ft_isalpha('a'));
+		printf("z: %i\n", ft_isalpha('z'));
+		printf("5: %i\n", ft_isalpha('5'));
+		return (0);
  }*/

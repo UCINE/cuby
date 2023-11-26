@@ -29,7 +29,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		return (dstlen + dstsize);
 	if (dstsize == 0 || dstsize <= dstlen)
 		return (srclen + dstsize);
-	while (src [index] != '\0' && index < dstsize - dstlen - 1)
+	while (src[index] != '\0' && index < dstsize - dstlen - 1)
 	{
 		dst[i] = src[index];
 		index++;
@@ -49,5 +49,5 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 // 	printf("dst: %s\n", dst);
 // 	printf("my function return: %lu\n", ft_strlcat(dst1, src, dstsize));
 // 	printf("my function: %s\n", dst);
-// 	return 0;
-// } 
+// 	return (0);
+// }

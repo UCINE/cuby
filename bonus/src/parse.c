@@ -6,22 +6,50 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:02:46 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/12 11:47:41 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/26 03:46:28 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	get_dirs(t_map *map, char *str, char flag)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	j = i;
+	while (str[i])
+	{
+		if (str[i] == ' ' || str[i] == '\t')
+		{
+			msg_er("Texture Error");
+			exit(1);
+		}
+		i++;
+	}
+	if (flag == 'N')
+		map->n_path = ft_strdup(str + j);
+	if (flag == 'S')
+		map->s_path = ft_strdup(str + j);
+	if (flag == 'E')
+		map->e_path = ft_strdup(str + j);
+	if (flag == 'W')
+		map->w_path = ft_strdup(str + j);
+}
+
 void	directions(t_map *map, char **str, int *i)
 {
 	if (!ft_strncmp(str[(*i)], "NO", 2))
-		map->n_path = ft_strdup(str[(*i)] + 2);
+		get_dirs(map, str[(*i)] + 2, 'N');
 	else if (!ft_strncmp(str[(*i)], "SO", 2))
-		map->s_path = ft_strdup(str[(*i)] + 2);
+		get_dirs(map, str[(*i)] + 2, 'S');
 	else if (!ft_strncmp(str[(*i)], "WE", 2))
-		map->w_path = ft_strdup(str[(*i)] + 2);
+		get_dirs(map, str[(*i)] + 2, 'W');
 	else if (!ft_strncmp(str[(*i)], "EA", 2))
-		map->e_path = ft_strdup(str[(*i)] + 2);
+		get_dirs(map, str[(*i)] + 2, 'E');
 }
 
 void	get_diretions(t_map *map, char **str, int *i)
