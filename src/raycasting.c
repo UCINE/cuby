@@ -261,6 +261,7 @@ int left_movement(int key, t_gameworld *data)
 }
 int	ft_moves(int key, t_gameworld *data)
 {
+	printf("hey");
 	if (key == 65293 && data->checkEnter == 0)
 		data->checkEnter = 1;
 	if (key == 65307)

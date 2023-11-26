@@ -69,16 +69,11 @@ void    raycast(t_gameworld *world)
 	world->mouse_x = 0;
 	world->mouse_y = 0;
     printf("%c == %f\n", world->map_info->pov, world->dir);
-    printf("Map Demon-> h: %d ==> w: %d\n", world->h, world->w);
     world->connection = mlx_init();
 	image_init(world);
 	world->win = mlx_new_window(world->connection, WIN_WIDTH,
 		WIN_HIGHT, "cub3D");
 	welcomer(world);
-    for (int i = 0; i < world->h; i++)
-    {
-        printf("[%s]\n", world->map_info->map[i]);
-    }
     mlx_hook(world->win, 2, 1L<<0, ft_moves, world);
 	mlx_hook(world->win, 17, 1L<<17, (void *)exit, world);
     mlx_loop(world->connection);

@@ -35,6 +35,7 @@ int main(int ac, char **av)
 	if (ac != 2)
 		return msg_er("./cub3d <map_path>");
 	world.map_info = process_map(av[1]);
+	printf("yooooo");
 	if (!world.map_info)
         return (printf("Stopped Here"));
 	// map_printing(world.map_info);
