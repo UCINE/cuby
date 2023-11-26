@@ -160,17 +160,13 @@ void draw(t_gameworld *data, int j, int color, t_ray ray)
 
 void calculate_ray_intersection(t_gameworld *data, t_ray *ray)
 {
-    double y;
-    double x;
-    double dy;
-    double dx;
+    double y = ray->p_y;
+    double x = ray->p_x;
+    double dy = cos(data->dir + ray->angle);
+    double dx = sin(data->dir + ray->angle);
 
-	y = ray->p_y;
-	x = ray->p_x;
     ray->hit_vert = 0;
     ray->hit_horz = 0;
-	dy = cos(data->dir + ray->angle);
-	dx = sin(data->dir + ray->angle);
     while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
 	{
         if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')
@@ -315,3 +311,25 @@ int	ft_moves(int key, t_gameworld *data)
 	return (0);
 }
 
+
+int        mouse_motion_hook(int x, int y, void *param)
+{
+        t_gameworld       *game;
+
+        game = (t_gameworld*)param;
+        if (x <= WIN_WIDTH && x >= 0 && y <= WIN_HIGHT && y >= 0)
+        {
+                if (game->mouse_x > x)
+                        game->dir += x * 0.00003;
+                else
+                        game->dir += -x * 0.00003;
+        }
+        game->mouse_x = x;
+        game->mouse_y = y;
+		realloc_image(game);
+		draw_ray(game, game->map_info->player_y, game->map_info->player_x, WIN_WIDTH);
+		mlx_put_image_to_window(game->connection, game->win,
+    	game->imageToDraw.img, 0, 0);
+		mlx_destroy_image(game->connection, game->imageToDraw.img);
+        return (0);
+}
