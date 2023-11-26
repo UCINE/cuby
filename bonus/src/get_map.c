@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:36:16 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/12 16:37:00 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/26 23:35:07 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	check_filename(char *str)
 			if (!ft_strcmp(&str[i], ".cub"))
 				return (0);
 			else
-				return msg_er("Invalid map name");
+				return (msg_er("Invalid map name"));
 		}
 		else if (!str[i + 1])
-			return msg_er("Invalid map name");
+			return (msg_er("Invalid map name"));
 		i++;
 	}
 	return (0);
@@ -73,25 +73,25 @@ void	map_init(t_map *map)
 	map->player_y = 0;
 }
 
-t_map *process_map(char *filename)
+t_map	*process_map(char *filename)
 {
-    t_map *map;
+	t_map	*map;
 
-    if (check_filename(filename))
-        return (NULL);
+	if (check_filename(filename))
+		return (NULL);
 	else
 	{
-        map = my_malloc(sizeof(t_map));
-        if (!map)  
+		map = my_malloc(sizeof(t_map));
+		if (!map)
 		{
-            ft_putstr_fd("\033[1;31mError\nCube3D:\033[0;0m Memory allocation error\n", 2);
-            return (NULL);
-        }
-        map = read_map(open(filename, O_RDONLY, 0666), map);
-        map_init(map);
-        map_fill(map->map, map);
+			msg_er("Memory allocation failed");
+			return (NULL);
+		}
+		map = read_map(open(filename, O_RDONLY, 0666), map);
+		map_init(map);
+		map_fill(map->map, map);
 		if (map_check(map))
-			return NULL;
+			return (NULL);
 	}
-    return (map);
+	return (map);
 }

@@ -23,13 +23,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if (lenght - start >= len)
-		str = malloc ((len + 1));
+		str = malloc((len + 1));
 	else
-		str = malloc ((lenght - start + 1));
+		str = malloc((lenght - start + 1));
 	if (str == NULL)
 		return (NULL);
 	if (len >= SIZE_MAX)
-		ft_strlcpy(str, &s[start], lenght +1);
+		ft_strlcpy(str, &s[start], lenght + 1);
 	else
 		ft_strlcpy(str, (s + start), (len + 1));
 	return (str);

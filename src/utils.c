@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 21:36:24 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/12 17:00:21 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/26 23:58:58 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,38 +16,6 @@ int	msg_er(char *msg)
 {
 	printf("\033[1;31mError:\nCub3D:\033[0;0m %s\n", msg);
 	return (1);
-}
-
-void	map_printing(t_map *map)
-{
-	int	i;
-
-	printf("North Path: %s\n", map->n_path);
-	printf("South Path: %s\n", map->s_path);
-	printf("West Path: %s\n", map->w_path);
-	printf("East Path: %s\n", map->e_path);
-	printf("Floor Color: %s\n", map->f_color);
-	printf("Ceiling Color: %s\n", map->c_color);
-	i = 0;
-	printf("\nmap with x:\n\n");
-	while (map->map_clone[i])
-	{
-		if (i > 9)
-			printf("Map Line %d:  %s\n", i, map->map_clone[i]);
-		else
-			printf("Map Line %d:   %s\n", i, map->map_clone[i]);
-		i++;
-	}
-	printf("\n\nmap without x:\n\n");
-	i = 0;
-	while (map->map[i])
-	{
-		if (i > 9)
-			printf("Map Line %d:  %s\n", i, map->map[i]);
-		else
-			printf("Map Line %d:   %s\n", i, map->map[i]);
-		i++;
-	}
 }
 
 int	find_biggest_line(char **str)
@@ -72,21 +40,20 @@ int	find_biggest_line(char **str)
 
 void	fill_x(int *i, int *k, t_map *map, char **str)
 {
-	int	j;
-
 	while ((*i) < map->map_len)
 	{
-		map->map_clone[(*i) + 1] = my_malloc(sizeof(char) * (map->max_line + 3));
+		map->map_clone[(*i) + 1] = my_malloc(sizeof(char) * (map->max_line
+					+ 3));
 		map->map_clone[(*i) + 1][0] = 'x';
-		j = 0;
+		map->j = 0;
 		(*k) = 1;
-		while (str[(*i)][j])
+		while (str[(*i)][map->j])
 		{
-			if (str[(*i)][j] == ' ')
+			if (str[(*i)][map->j] == ' ')
 				map->map_clone[(*i) + 1][(*k)] = 'x';
 			else
-				map->map_clone[(*i) + 1][(*k)] = str[(*i)][j];
-			j++;
+				map->map_clone[(*i) + 1][(*k)] = str[(*i)][map->j];
+			map->j++;
 			(*k)++;
 		}
 		while ((*k) <= map->max_line + 1)
@@ -112,28 +79,28 @@ int	map_len(char **str)
 void	get_map(char **str, t_map *map)
 {
 	int	i;
-	int	k;
 
 	i = 0;
-	k = 0;
+	map->k = 0;
 	map->max_line = find_biggest_line(str);
 	map->map_len = map_len(str);
 	map->map_clone = (char **)my_malloc(sizeof(char *) * (map->map_len + 3));
 	map->map_clone[0] = (char *)my_malloc(sizeof(char) * (map->max_line + 3));
-	while (k <= map->max_line + 1)
+	while (map->k <= map->max_line + 1)
 	{
-		map->map_clone[0][k] = 'x';
-		k++;
+		map->map_clone[0][map->k] = 'x';
+		map->k++;
 	}
-	map->map_clone[0][k] = '\0';
-	fill_x(&i, &k, map, str);
-	map->map_clone[i + 1] = (char *)my_malloc(sizeof(char) * (map->max_line + 3));
-	k = 0;
-	while (k <= map->max_line + 1)
+	map->map_clone[0][map->k] = '\0';
+	fill_x(&i, &map->k, map, str);
+	map->map_clone[i + 1] = (char *)my_malloc(sizeof(char) * (map->max_line
+				+ 3));
+	map->k = 0;
+	while (map->k <= map->max_line + 1)
 	{
-		map->map_clone[i + 1][k] = 'x';
-		k++;
+		map->map_clone[i + 1][map->k] = 'x';
+		map->k++;
 	}
-	map->map_clone[i + 1][k] = '\0';
+	map->map_clone[i + 1][map->k] = '\0';
 	map->map_clone[i + 2] = NULL;
 }

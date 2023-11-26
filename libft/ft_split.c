@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
 int	len_word(char const *s, char del)
@@ -62,7 +61,7 @@ char	**ft_split(char const *s, char c)
 }
 
 // #include<stdio.h>
-// int	main()
+// int	main(void)
 // {
 // 	char	str[] = "hehe hehe hehe hehe";
 // 	char **A = ft_split(str, ' ');

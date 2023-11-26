@@ -28,7 +28,7 @@ void	*ft_calloc(size_t count, size_t size)
 // {
 // 	//char	str[] = "Hello ";
 // 	char *ptr;
-// 	ptr = (char *)malloc(6 * sizeof(char));	
+// 	ptr = (char *)malloc(6 * sizeof(char));
 // 	for (int x = 0;x <= 6;x++)
 // 		printf("ptr[%d] --> %d\n", x, ptr[x]);
 // }

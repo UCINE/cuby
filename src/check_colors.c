@@ -28,7 +28,7 @@ int	valid_color(char *color, int *i, int *j, t_color *rgb)
 	int	val;
 
 	val = 0;
-	while(ft_isdigit(color[(*i)]))
+	while (ft_isdigit(color[(*i)]))
 	{
 		val = val * 10 + (color[(*i)++] - '0');
 		(*j)++;
@@ -39,21 +39,21 @@ int	valid_color(char *color, int *i, int *j, t_color *rgb)
 		val = 0;
 	}
 	else
-		return msg_er("Invalid color");
+		return (msg_er("Invalid color"));
 	return (0);
 }
 
-int check_colors(char *color, t_color *rgb)
+int	check_colors(char *color, t_color *rgb)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
 	rgb->flag = 0;
 	while (color[i] == ' ' || color[i] == '\t')
 		i++;
-	while(color[i])
+	while (color[i])
 	{
 		if (ft_isdigit(color[i]))
 		{
@@ -61,13 +61,12 @@ int check_colors(char *color, t_color *rgb)
 				return (1);
 		}
 		if (j > 3)
-			return msg_er("Invalid color");
+			return (msg_er("Invalid color"));
 		else if (color[i] == ',')
 			j = 0;
 		else if (color[i] == '\0')
-			break;
+			break ;
 		i++;
 	}
 	return (0);
 }
-
