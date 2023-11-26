@@ -1,75 +1,39 @@
-CC = cc
+CC          = cc
 
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+NAME        = cub3D
 
-NAME = cub3D
-LIBFT = libft.a
-LIBFT_DIR = ./libft
+LIBFT_NAME  = libft.a
 
-INCLUDES = -I/usr/include -Imlx -I$(LIBFT_DIR)
-SRC_DIR = ./src/
-SRC_DIR2 = ./get_next_line/
-OBJ_DIR = ./obj/
+SRCS        = src/check_colors.c src/get_map.c src/main_raycast.c src/map_check.c \
+				 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c get_next_line/leaks_free_utils.c get_next_line/leaks_free.c \
+				 src/map_size.c src/parse.c src/raycasting.c src/twod.c src/utils.c
 
-UNAME_S := $(shell uname -s)
-ifeq ($(UNAME_S),Linux)
-    LINK_FLAGS = -L $(LIBFT_DIR) -lft -L./minilibx-linux -lmlx -L/usr/lib -lXext -lX11 -lm -lz
-endif
-ifeq ($(UNAME_S),Darwin)
-    LINK_FLAGS = -L $(LIBFT_DIR) -lft -lmlx -framework OpenGL -framework AppKit
-endif
+OBJ         = $(SRCS:.c=.o)
 
-RED=\033[1;31m
-GREEN=\033[1;32m
-NC=\033[0m
+CFLAGS      = -Wall -Wextra -Werror -g3 -fsanitize=address
 
-SRCS = $(wildcard $(SRC_DIR)*.c) $(wildcard $(SRC_DIR2)*.c)
-OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(patsubst $(SRC_DIR2)%.c,$(OBJ_DIR)%.o,$(SRCS)))
-DEPS = $(OBJS:.o=.d)
+LINUX_FLAGS = -L libft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 all: $(NAME)
 
--include $(DEPS)
 
-# relink:
-# 	@if [ -f $(NAME) ] && [ $(NAME) -nt $(word 1,$(OBJS)) ]; then \
-# 		echo "HUH?, change something first!"; \
-# 		false; \
-# 	fi
+%.o:%.c
+	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@echo "\033[1;32mCompiling... " $@ "\033[0;0m"
 
-$(NAME):  $(LIBFT) $(OBJS)
-	@echo "$(GREEN)\nLinking...\n$(NC)"
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LINK_FLAGS) -o $(NAME)
-	@echo "$(GREEN)Done!✅$(NC)"
-
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	@mkdir -p $(@D)
-	@echo "$(GREEN)Compiling $<...$(NC)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
-
-$(OBJ_DIR)%.o: $(SRC_DIR2)%.c
-	@mkdir -p $(@D)
-	@echo "$(GREEN)Compiling $<...$(NC)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -MMD -c $< -o $@
-
-$(OBJS): | $(LIBFT)
-
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+$(NAME): $(OBJ)
+	@make -C libft
+	@$(CC) $(OBJ) $(CFLAGS) $(LINUX_FLAGS) -o $(NAME)
+	@echo "\033[1;32mDone Compiling !\033[0;0m"
 
 clean:
-	@echo "$(RED)Cleaning up...\n$(NC)"
-	@sleep 0.5
-	@rm -f $(OBJS) $(DEPS)
-	@$(MAKE) clean -C $(LIBFT_DIR)
-	@echo "$(GREEN)Done!✅$(NC)"
+	@rm -rf $(OBJ)
+	@make -s -C libft clean
+	@echo "\033[1;31mDone Cleaning!\033[0;0m"
 
 fclean: clean
-	@rm -f $(NAME)
-	@sleep 0.5
-	@$(MAKE) fclean -C $(LIBFT_DIR)
+	@rm -rf $(NAME)
+	@make -s -C libft fclean
+	@echo "\033[1;31mDone Full Cleaning!\033[0;0m"
 
 re: fclean all
-
-
-
