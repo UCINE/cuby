@@ -43,9 +43,11 @@
 
 typedef struct s_ray
 {
-    double p_y;
-    double p_x;
-    double angle;
+    double 	p_y;
+    double 	p_x;
+    double 	angle;
+	int		hit_horz;
+	int		hit_vert;
 } t_ray;
 
 typedef struct s_image

@@ -79,7 +79,7 @@ void draw_ceiling_and_floor(t_gameworld *data, int j)
     }
 }
 
-void draw_walls(t_gameworld *data, int j, int color, int hit_horz, int hit_vert) 
+void draw_walls(t_gameworld *data, int j, int color, t_ray *ray) 
 {
     int i = data->start;
     double l, m;
@@ -89,9 +89,9 @@ void draw_walls(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
     if (data->orientation == SOUTH) a = SOUTH;
     if (data->orientation == EAST)  a = EAST;
     if (data->orientation == WEST)  a = WEST;
-    if (hit_vert)
+    if (ray->hit_vert)
         data->t[a].x = (int)data->wall_hity % (int)data->t[a].w;
-    else if (hit_horz)
+    else if (ray->hit_horz)
         data->t[a].x = (int)data->wall_hitx % (int)data->t[a].w;
     data->t[a].y = 0;
     while (i < data->end) 
@@ -132,34 +132,34 @@ int ft_orientation(int hit_vert, int hit_horz, double i, t_gameworld *data)
 	return (0);
 }
 
-void draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert) 
+void draw(t_gameworld *data, int j, int color, t_ray ray)
 {
     draw_ceiling_and_floor(data, j);
-    draw_walls(data, j, color, hit_horz, hit_vert);
+    draw_walls(data, j, color, &ray);
 }
 
-void calculate_ray_intersection(t_gameworld *data, t_ray *ray, int *hit_vert, int *hit_horz)
+void calculate_ray_intersection(t_gameworld *data, t_ray *ray)
 {
     double y = ray->p_y;
     double x = ray->p_x;
     double dy = cos(data->dir + ray->angle);
     double dx = sin(data->dir + ray->angle);
 
-    *hit_vert = 0;
-    *hit_horz = 0;
+    ray->hit_vert = 0;
+    ray->hit_horz = 0;
     while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
 	{
         if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')
-            *hit_vert = 1;
+            ray->hit_vert = 1;
         if (data->map_info->map[(int)((y - dy) / GRID)][(int)(x / GRID)] == '1')
-            *hit_horz = 1;
+            ray->hit_horz = 1;
         x -= dx;
         y -= dy;
     }
     data->wall_hitx = x;
     data->wall_hity = y;
     data->distance = ft_distance(ray->p_x, ray->p_y, x, y);
-    data->orientation = ft_orientation(*hit_vert, *hit_horz, ray->angle, data);
+    data->orientation = ft_orientation(ray->hit_vert, ray->hit_horz, ray->angle, data);
     data->wall_height = wall_hight(data, ray->angle);
 }
 
@@ -167,17 +167,15 @@ void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
 {
 	t_ray	ray;
     double increment = (M_PI / 3) / WIN_WIDTH;
-    int hit_vert;
-	int	hit_horz;
 
 	ray.p_y = ray_y;
     ray.p_x = ray_x;
 	ray.angle = -M_PI / 6;
     while (ray.angle <= M_PI / 6)
 	{
-        calculate_ray_intersection(data, &ray, &hit_vert, &hit_horz);
+        calculate_ray_intersection(data, &ray);
         get_start_end(data);
-        draw(data, j, 0xFFFFFF, hit_horz, hit_vert);
+        draw(data, j, 0xFFFFFF, ray);
         j--;
         ray.angle += increment;
     }
@@ -201,6 +199,7 @@ int	forward_movement(int key, t_gameworld *data)
 		}
 	return (0);
 }
+
 int	backward_movement(int key, t_gameworld *data)
 {
 	int	y;
@@ -263,9 +262,9 @@ int left_movement(int key, t_gameworld *data)
 		}
 	return (0);
 }
+
 int	ft_moves(int key, t_gameworld *data)
 {
-	printf("hey");
 	if (key == 65293 && data->checkEnter == 0)
 		data->checkEnter = 1;
 	if (key == 65307)
