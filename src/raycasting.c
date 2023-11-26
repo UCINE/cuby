@@ -64,14 +64,16 @@ void draw_ceiling_and_floor(t_gameworld *data, int j)
     int k = 0;
     while (k < data->start) 
 	{
-        data->map_info->celling.flag = createRGB(data->map_info->celling.r, data->map_info->celling.g, data->map_info->celling.b);
+        data->map_info->celling.flag = createRGB(data->map_info->celling.r, 
+			data->map_info->celling.g, data->map_info->celling.b);
         my_mlx_pixel_put(data, j, k, data->map_info->celling.flag);
         k++;
     }
 	k = data->end;
     while (k >= data->end && k < WIN_HIGHT) 
 	{
-        data->map_info->floor.flag = createRGB(data->map_info->floor.r, data->map_info->floor.g, data->map_info->floor.b);
+        data->map_info->floor.flag = createRGB(data->map_info->floor.r, 
+			data->map_info->floor.g, data->map_info->floor.b);
         my_mlx_pixel_put(data, j, k, data->map_info->floor.flag);
         k++;
     }
@@ -136,12 +138,12 @@ void draw(t_gameworld *data, int j, int color, int hit_horz, int hit_vert)
     draw_walls(data, j, color, hit_horz, hit_vert);
 }
 
-void calculate_ray_intersection(t_gameworld *data, double p_y, double p_x, double angle, int *hit_vert, int *hit_horz)
+void calculate_ray_intersection(t_gameworld *data, t_ray *ray, int *hit_vert, int *hit_horz)
 {
-    double y = p_y;
-    double x = p_x;
-    double dy = cos(data->dir + angle);
-    double dx = sin(data->dir + angle);
+    double y = ray->p_y;
+    double x = ray->p_x;
+    double dy = cos(data->dir + ray->angle);
+    double dx = sin(data->dir + ray->angle);
 
     *hit_vert = 0;
     *hit_horz = 0;
@@ -156,26 +158,28 @@ void calculate_ray_intersection(t_gameworld *data, double p_y, double p_x, doubl
     }
     data->wall_hitx = x;
     data->wall_hity = y;
-    data->distance = ft_distance(p_x, p_y, x, y);
-    data->orientation = ft_orientation(*hit_vert, *hit_horz, angle, data);
-    data->wall_height = wall_hight(data, angle);
+    data->distance = ft_distance(ray->p_x, ray->p_y, x, y);
+    data->orientation = ft_orientation(*hit_vert, *hit_horz, ray->angle, data);
+    data->wall_height = wall_hight(data, ray->angle);
 }
 
 void draw_ray(t_gameworld *data, double ray_y, double ray_x, int j)
 {
-    double angle;
+	t_ray	ray;
     double increment = (M_PI / 3) / WIN_WIDTH;
     int hit_vert;
 	int	hit_horz;
 
-	angle = -M_PI / 6;
-    while (angle <= M_PI / 6)
+	ray.p_y = ray_y;
+    ray.p_x = ray_x;
+	ray.angle = -M_PI / 6;
+    while (ray.angle <= M_PI / 6)
 	{
-        calculate_ray_intersection(data, ray_y, ray_x, angle, &hit_vert, &hit_horz);
+        calculate_ray_intersection(data, &ray, &hit_vert, &hit_horz);
         get_start_end(data);
         draw(data, j, 0xFFFFFF, hit_horz, hit_vert);
         j--;
-        angle += increment;
+        ray.angle += increment;
     }
 }
 
@@ -267,7 +271,8 @@ int	ft_moves(int key, t_gameworld *data)
 		exit(0);
 	if (data->checkEnter == 1)
 	{
-		if (key != 65363 && key != 65361 && key != 119 && key != 115 && key != 65293 && key != 97 && key != 100)
+		if (key != 65363 && key != 65361 && key != 119 && key != 115 
+			&& key != 65293 && key != 97 && key != 100)
 			return (0);
 		realloc_image(data);
 		backward_movement(key, data);

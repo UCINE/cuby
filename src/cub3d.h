@@ -41,6 +41,13 @@
 #define EAST 2
 #define GRID 40
 
+typedef struct s_ray
+{
+    double p_y;
+    double p_x;
+    double angle;
+} t_ray;
+
 typedef struct s_image
 {
     void *img;
