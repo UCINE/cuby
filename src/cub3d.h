@@ -130,6 +130,7 @@ typedef struct s_gameworld
 	void			*connection;
 	double			save_ray_ang;
 	double			wall_distance;
+	int				current_texture_index;
 	double			was_hit_vertical;
 	double			was_hit_horizontal;
 	double			is_ray_facing_up;
