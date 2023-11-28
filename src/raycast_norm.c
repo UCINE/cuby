@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 23:39:29 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 22:01:14 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:49:14 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	calculate_ray_intersection(t_gameworld *data, t_ray *ray)
 	ray->hit_vert = 0;
 	ray->hit_horz = 0;
 	dy = cos(data->dir + ray->angle) / 15;
-	dx = sin(data->dir + ray->angle)/  15;
+	dx = sin(data->dir + ray->angle) / 15;
 	while (data->map_info->map[(int)(y / GRID)][(int)(x / GRID)] != '1')
 	{
 		if (data->map_info->map[(int)(y / GRID)][(int)((x - dx) / GRID)] == '1')

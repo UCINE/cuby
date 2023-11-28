@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 21:46:28 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:40:13 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int	check_chars(t_map *map, int i, int j)
 {
 	int	save;
 
-	i = 0;
 	save = 0;
 	while (map->map[i])
 	{

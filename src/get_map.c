@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:36:16 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 22:00:18 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:50:46 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ t_map	*read_map(int fd, t_map *map)
 		map->line = ft_strjoin(map->line, map->get_line);
 		free(map->get_line);
 		map->get_line = get_next_line(fd);
-		// printf("->%s", map->get_line);
 	}
 	free(map->get_line);
 	map->map = ft_split(map->line, '\n');
@@ -89,6 +88,8 @@ t_map	*process_map(char *filename)
 			return (NULL);
 		}
 		map = read_map(open(filename, O_RDONLY, 0666), map);
+		if (!map)
+			exit(1);
 		map_init(map);
 		map_fill(map->map, map);
 		if (map_check(map))
