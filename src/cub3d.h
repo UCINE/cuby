@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/26 23:58:11 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 19:32:45 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef enum e_keys
 
 typedef struct s_color
 {
+	int		comma;
 	int		flag;
 	int		r;
 	int		g;
@@ -151,7 +152,7 @@ t_map		*process_map(char *filename);
 int			map_check(t_map *map);
 void		map_printing(t_map *map);
 void		get_map(char **str, t_map *map);
-int			check_colors(char *color, t_color *rgb);
+int			check_colors(char *color, t_color *rgb, int i, int j);
 void		raycast(t_gameworld *world);
 int			ft_moves(int key, t_gameworld *data);
 void		draw_elements(t_gameworld *data);
@@ -173,4 +174,5 @@ void		draw_ceiling_and_floor(t_gameworld *data, int j);
 void		get_start_end(t_gameworld *data);
 double		wall_hight(t_gameworld *data, double ray);
 int			get_texture_color(t_image *texture, int x, int y);
+int			check_for_colors(t_map *map);
 #endif
