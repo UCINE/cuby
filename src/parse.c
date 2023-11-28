@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:02:46 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/26 03:46:28 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 18:56:21 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	get_colors(char **str, t_map *map, int *i)
 			map->c_color = ft_strdup(str[(*i)] + 1);
 		(*i)++;
 	}
+	if (check_for_colors(map))
+		exit(1);
 }
 
 void	map_fill(char **str, t_map *map)

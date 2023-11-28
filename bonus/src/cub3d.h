@@ -6,16 +6,16 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/27 00:00:52 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 19:36:18 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../get_next_line/get_next_line.h"
-# include "../libft/libft.h"
-# include "../minilibx_opengl_20191021/mlx.h"
+# include "../../get_next_line/get_next_line.h"
+# include "../../libft/libft.h"
+# include "../../minilibx_opengl_20191021/mlx.h"
 # include <ctype.h>
 # include <math.h>
 # include <stdbool.h>

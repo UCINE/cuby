@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lahamoun <lahamoun@student.42.fr>          +#+  +:+       +#+         #
+#    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 01:17:39 by lahamoun          #+#    #+#              #
-#    Updated: 2023/11/27 01:17:41 by lahamoun         ###   ########.fr        #
+#    Updated: 2023/11/28 19:38:24 by ojamal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS        = src/check_colors.c src/get_map.c src/main_raycast.c src/map_check.
 				 
 
 B_SRCS        = bonus/src/check_colors.c bonus/src/get_map.c bonus/src/main_raycast.c bonus/src/map_check.c \
-				 bonus/get_next_line/get_next_line.c bonus/get_next_line/get_next_line_utils.c bonus/get_next_line/leaks_free_utils.c bonus/get_next_line/leaks_free.c \
+				 get_next_line/get_next_line.c get_next_line/get_next_line_utils.c get_next_line/leaks_free_utils.c get_next_line/leaks_free.c \
 				 bonus/src/map_size.c bonus/src/parse.c bonus/src/raycasting.c bonus/src/twod.c bonus/src/utils.c bonus/src/map_check2.c \
 				 bonus/src/raycast_norm.c bonus/src/ft_norm.c bonus/src/raycasting2.c
 
@@ -41,16 +41,16 @@ all: $(NAME)
 bonus: $(B_NAME)
 
 %.o:%.c
-	@$(CC) $(CFLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@$(CC) $(CFLAGS) $(LINUX_FLAGS) -O3 -c $< -o $@
 	@echo "\033[1;32mCompiling... " $@ "\033[0;0m"
 
 $(NAME): $(OBJ)
-	@make -C libft
+	@make -s -C libft
 	@$(CC) $(OBJ) $(CFLAGS) $(LINUX_FLAGS) -o $(NAME)
 	@echo "\033[1;32mDone Compiling !\033[0;0m"
 
 $(B_NAME): $(B_OBJ)
-	@make -C libft
+	@make -s -C libft
 	@$(CC) $(B_OBJ) $(CFLAGS) $(LINUX_FLAGS) -o $(B_NAME)
 	@echo "\033[1;32mDone Compiling Bonus!\033[0;0m"
 
