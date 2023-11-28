@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 19:35:07 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:43:24 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@ int	check_for_colors(t_map *map)
 		return (msg_er("Invalid color"));
 	if (!map->c_color)
 		return (msg_er("Invalid color"));
-	if (check_colors(map->f_color, &map->floor, i, j))
+	if (check_colors(map->f_color, &map->floor, i, j)
+		|| check_rgb(&map->floor))
 		return (1);
-	if (check_colors(map->c_color, &map->celling, i, j))
+	if (check_colors(map->c_color, &map->celling, i, j)
+		|| check_rgb(&map->celling))
 		return (1);
 	return (0);
 }

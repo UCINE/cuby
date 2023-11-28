@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:36:16 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/26 23:35:07 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:20:10 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_map	*read_map(int fd, t_map *map)
 {
 	if (fd == -1)
 	{
-		ft_putstr_fd("\033[1;31mError\nCube3D:\033[0;0m Invalid file", 2);
+		msg_er("Invalid file");
 		return (NULL);
 	}
 	map->get_line = NULL;
@@ -45,7 +45,7 @@ t_map	*read_map(int fd, t_map *map)
 	map->get_line = get_next_line(fd);
 	if (!map->get_line)
 	{
-		ft_putendl_fd("\033[1;31mError\nCube3D:\033[0;0m Invalid file", 2);
+		msg_er("Invalid file");
 		return (NULL);
 	}
 	while (map->get_line)

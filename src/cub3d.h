@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/28 19:32:45 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:40:55 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct s_gameworld
 }			t_gameworld;
 
 void		map_fill(char **str, t_map *map);
+int			check_rgb(t_color *rgb);
 int			msg_er(char *str);
 int			check_for_textures(t_map *map);
 t_map		*process_map(char *filename);
