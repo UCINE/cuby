@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 22:11:07 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/13 07:27:37 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:03 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if (lenght - start >= len)
-		str = malloc((len + 1));
+		str = my_malloc((len + 1));
 	else
-		str = malloc((lenght - start + 1));
+		str = my_malloc((lenght - start + 1));
 	if (str == NULL)
 		return (NULL);
 	if (len >= SIZE_MAX)

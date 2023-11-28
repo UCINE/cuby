@@ -6,7 +6,7 @@
 #    By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/27 01:17:39 by lahamoun          #+#    #+#              #
-#    Updated: 2023/11/28 19:38:24 by ojamal           ###   ########.fr        #
+#    Updated: 2023/11/28 22:41:17 by ojamal           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ OBJ         = $(SRCS:.c=.o)
 
 B_OBJ         = $(B_SRCS:.c=.o)
 
-CFLAGS      = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS      = -Wall -Wextra -Werror
 
 LINUX_FLAGS = -L libft -lft -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 

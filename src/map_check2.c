@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 23:27:04 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/26 23:37:42 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 22:50:17 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,25 @@
 int	check_for_textures(t_map *map)
 {
 	if (!map->n_path)
-		return (msg_er("Invalid texture"));
+	{
+		msg_er("Invalid texture");
+		exit(1);
+	}
 	if (!map->e_path)
-		return (msg_er("Invalid texture"));
+	{
+		msg_er("Invalid texture");
+		exit(1);
+	}
 	if (!map->s_path)
-		return (msg_er("Invalid texture"));
+	{
+		msg_er("Invalid texture");
+		exit(1);
+	}
 	if (!map->w_path)
-		return (msg_er("Invalid texture"));
+	{
+		msg_er("Invalid texture");
+		exit(1);
+	}
 	return (0);
 }
 

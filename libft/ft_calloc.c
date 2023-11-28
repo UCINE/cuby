@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/15 18:12:11 by ojamal            #+#    #+#             */
-/*   Updated: 2022/11/01 23:14:31 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:03 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t count, size_t size)
 
 	if (size != 0 && count >= SIZE_MAX / size)
 		return (NULL);
-	str = malloc(count * size);
+	str = my_malloc(count * size);
 	if (str == NULL)
 		return (NULL);
 	ft_bzero(str, (count * size));
@@ -28,7 +28,7 @@ void	*ft_calloc(size_t count, size_t size)
 // {
 // 	//char	str[] = "Hello ";
 // 	char *ptr;
-// 	ptr = (char *)malloc(6 * sizeof(char));
+// 	ptr = (char *)my_malloc(6 * sizeof(char));
 // 	for (int x = 0;x <= 6;x++)
 // 		printf("ptr[%d] --> %d\n", x, ptr[x]);
 // }

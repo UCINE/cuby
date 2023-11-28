@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 21:43:24 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:46:28 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,11 @@ int	check_chars(t_map *map, int i, int j)
 	while (map->map[i])
 	{
 		j = 0;
+		if (map->map[i][j] == '\n')
+			return (msg_er("Invalid map"));
 		while (map->map[i][j])
 		{
-			save = check_charset(map, map->map[i][j], "01NSEW \t");
+			save = check_charset(map, map->map[i][j], "01NSEW ");
 			if (!save)
 				return (msg_er("Invalid charset"));
 			else if (save == 2)
