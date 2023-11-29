@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 21:12:58 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/13 07:28:15 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:40 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+# include "../get_next_line/get_next_line.h"
 
 typedef struct s_list
 {

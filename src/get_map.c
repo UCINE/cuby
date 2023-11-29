@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:36:16 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 21:20:10 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:57:31 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ t_map	*process_map(char *filename)
 			return (NULL);
 		}
 		map = read_map(open(filename, O_RDONLY, 0666), map);
+		if (!map)
+			exit(1);
 		map_init(map);
 		map_fill(map->map, map);
 		if (map_check(map))

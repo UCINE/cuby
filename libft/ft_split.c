@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 07:27:09 by ojamal            #+#    #+#             */
-/*   Updated: 2023/10/13 07:27:10 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:03 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**ft_split(char const *s, char c)
 	lenght = len_word(s, c);
 	index = 0;
 	index2 = 0;
-	str = (char **)malloc((len_word(s, c) + 1) * sizeof(char *));
+	str = (char **)my_malloc((len_word(s, c) + 1) * sizeof(char *));
 	if (!str)
 		return (NULL);
 	while (index2 < lenght)

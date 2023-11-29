@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/14 23:43:17 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 21:38:35 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 22:39:23 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,13 @@ int	valid_color(char *color, int *i, int *j, t_color *rgb)
 	int	val;
 
 	val = 0;
-	if (ft_isdigit(color[(*i)]))
+	while (ft_isdigit(color[(*i)]))
 	{
-		while (ft_isdigit(color[(*i)]))
-		{
-			val = val * 10 + (color[(*i)++] - '0');
-			(*j)++;
-		}
+		val = val * 10 + (color[(*i)++] - '0');
+		if (color[(*i)] && !ft_isdigit(color[(*i)]) && color[(*i)] != ',')
+			return (msg_er("Invalid color"));
+		(*j)++;
 	}
-	else
-		return (msg_er("Invalid color"));
 	if (color[(*i)] == ',')
 		rgb->comma++;
 	if (rgb->comma > 2)

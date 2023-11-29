@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 23:28:31 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/26 23:54:52 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:40:13 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 int	check_for_colors(t_map *map)
 {
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	if (!map->f_color)
 		return (msg_er("Invalid color"));
 	if (!map->c_color)
 		return (msg_er("Invalid color"));
-	if ((check_colors(map->f_color, &map->floor) || check_colors(map->c_color,
-				&map->celling)))
+	if (check_colors(map->f_color, &map->floor, i, j)
+		|| check_rgb(&map->floor))
+		return (1);
+	if (check_colors(map->c_color, &map->celling, i, j)
+		|| check_rgb(&map->celling))
 		return (1);
 	return (0);
 }
@@ -50,14 +58,15 @@ int	check_chars(t_map *map, int i, int j)
 {
 	int	save;
 
-	i = 0;
 	save = 0;
 	while (map->map[i])
 	{
 		j = 0;
+		if (map->map[i][j] == '\n')
+			return (msg_er("Invalid map"));
 		while (map->map[i][j])
 		{
-			save = check_charset(map, map->map[i][j], "01NSEW \t");
+			save = check_charset(map, map->map[i][j], "01NSEW ");
 			if (!save)
 				return (msg_er("Invalid charset"));
 			else if (save == 2)
@@ -81,8 +90,7 @@ int	map_check(t_map *map)
 
 	i = 0;
 	j = 0;
-	if (check_for_colors(map) || check_for_textures(map) || check_chars(map, i,
-			j))
+	if (check_chars(map, i, j))
 		return (1);
 	while (map->map_clone[i])
 	{

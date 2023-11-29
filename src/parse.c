@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 03:02:46 by ojamal            #+#    #+#             */
-/*   Updated: 2023/11/28 21:43:02 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:49:05 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,33 @@ void	get_dirs(t_map *map, char *str, char flag)
 		map->w_path = ft_strdup(str + j);
 }
 
-void	directions(t_map *map, char **str, int *i)
+int	directions(t_map *map, char **str, int *i)
 {
 	if (!ft_strncmp(str[(*i)], "NO", 2))
+	{
+		if (map->n_path)
+			return (msg_er("Invalid Texture"));
 		get_dirs(map, str[(*i)] + 2, 'N');
+	}
 	else if (!ft_strncmp(str[(*i)], "SO", 2))
+	{
+		if (map->s_path)
+			return (msg_er("Invalid Texture"));
 		get_dirs(map, str[(*i)] + 2, 'S');
+	}
 	else if (!ft_strncmp(str[(*i)], "WE", 2))
+	{
+		if (map->w_path)
+			return (msg_er("Invalid Texture"));
 		get_dirs(map, str[(*i)] + 2, 'W');
+	}
 	else if (!ft_strncmp(str[(*i)], "EA", 2))
+	{
+		if (map->e_path)
+			return (msg_er("Invalid Texture"));
 		get_dirs(map, str[(*i)] + 2, 'E');
+	}
+	return (0);
 }
 
 void	get_colors(char **str, t_map *map, int *i)
@@ -88,7 +105,10 @@ void	map_fill(char **str, t_map *map)
 	{
 		if (!ft_strncmp(str[(i)], "NO", 2) || !ft_strncmp(str[(i)], "SO", 2)
 			|| !ft_strncmp(str[(i)], "WE", 2) || !ft_strncmp(str[(i)], "EA", 2))
-			directions(map, str, &i);
+		{
+			if (directions(map, str, &i))
+				exit (1);
+		}
 		else if (!ft_strncmp(str[(i)], "F", 1) || !ft_strncmp(str[(i)], "C", 1))
 			get_colors(str, map, &i);
 		else

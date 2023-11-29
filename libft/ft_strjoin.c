@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ojamal <ojamal@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 22:19:36 by ojamal            #+#    #+#             */
-/*   Updated: 2023/08/18 21:36:00 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/28 21:56:03 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ char	*ft_strjoin(char *s1, char *s2)
 	i2 = 0;
 	if (!s1)
 	{
-		s1 = malloc(1);
+		s1 = my_malloc(1);
 		s1[0] = '\0';
 	}
-	new_line = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	new_line = my_malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new_line)
 		return (NULL);
 	while (s1[i])
