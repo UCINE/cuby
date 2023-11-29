@@ -6,16 +6,16 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/28 19:36:18 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 01:02:40 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../../get_next_line/get_next_line.h"
-# include "../../libft/libft.h"
-# include "../../minilibx_opengl_20191021/mlx.h"
+# include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
+# include "../minilibx_opengl_20191021/mlx.h"
 # include <ctype.h>
 # include <math.h>
 # include <stdbool.h>
@@ -62,16 +62,9 @@ typedef struct s_image
 	double	y;
 }			t_image;
 
-typedef enum e_keys
-{
-	key_forward = MLX_KEY_W,
-	key_backward = MLX_KEY_S,
-	key_left = MLX_KEY_A,
-	key_right = MLX_KEY_D,
-}			t_keys;
-
 typedef struct s_color
 {
+	int		comma;
 	int		flag;
 	int		r;
 	int		g;
@@ -145,13 +138,14 @@ typedef struct s_gameworld
 }			t_gameworld;
 
 void		map_fill(char **str, t_map *map);
+int			check_rgb(t_color *rgb);
 int			msg_er(char *str);
 int			check_for_textures(t_map *map);
 t_map		*process_map(char *filename);
 int			map_check(t_map *map);
 void		map_printing(t_map *map);
 void		get_map(char **str, t_map *map);
-int			check_colors(char *color, t_color *rgb);
+int			check_colors(char *color, t_color *rgb, int i, int j);
 void		raycast(t_gameworld *world);
 int			ft_moves(int key, t_gameworld *data);
 void		draw_elements(t_gameworld *data);
@@ -173,5 +167,6 @@ void		draw_ceiling_and_floor(t_gameworld *data, int j);
 void		get_start_end(t_gameworld *data);
 double		wall_hight(t_gameworld *data, double ray);
 int			get_texture_color(t_image *texture, int x, int y);
+int			check_for_colors(t_map *map);
 int			mouse_motion_hook(int x, int y, void *param);
 #endif

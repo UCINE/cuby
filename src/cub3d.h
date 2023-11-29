@@ -6,7 +6,7 @@
 /*   By: ojamal <ojamal@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 21:13:25 by lahamoun          #+#    #+#             */
-/*   Updated: 2023/11/28 21:40:55 by ojamal           ###   ########.fr       */
+/*   Updated: 2023/11/29 00:59:15 by ojamal           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,6 @@ typedef struct s_image
 	double	x;
 	double	y;
 }			t_image;
-
-typedef enum e_keys
-{
-	key_forward = MLX_KEY_W,
-	key_backward = MLX_KEY_S,
-	key_left = MLX_KEY_A,
-	key_right = MLX_KEY_D,
-}			t_keys;
 
 typedef struct s_color
 {
