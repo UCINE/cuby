@@ -1,7 +1,7 @@
 ## Mlx related
 Makefile.gen
 /test/mlx-test
-
+##./cub
 ## Editor
 .vscode/*
 *~
