@@ -1,3 +1,8 @@
+WE ./texture/west_texture.xpm
+NO ./texture/north_texture.xpm
+SO ./texture/south_texture.xpm
+EA ./texture/east_texture.xpm
+
 F 139,69,19
 
 C 135,206,235
